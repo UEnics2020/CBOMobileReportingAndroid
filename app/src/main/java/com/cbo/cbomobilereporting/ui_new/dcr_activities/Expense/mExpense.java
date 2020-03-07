@@ -38,6 +38,8 @@ public class mExpense implements Serializable {
     private Double Km = 0D;
     private String Station ="";
     private String Attachment = "";
+    private String DARATE_SLAB_DOUBLESIDE = "Y";
+    private String DCR_DISTANCE_ID = "-1";
 
 
     ///getter
@@ -183,6 +185,16 @@ public class mExpense implements Serializable {
     public String getAttachment() {
         return Attachment;
     }
+
+    public String getDARATE_SLAB_DOUBLESIDE() {
+        return DARATE_SLAB_DOUBLESIDE;
+    }
+
+    public String getDCR_DISTANCE_ID() {
+        return DCR_DISTANCE_ID;
+    }
+
+
 
     /// setter
 
@@ -339,6 +351,17 @@ public class mExpense implements Serializable {
 
     public mExpense setAttachment(String attachment) {
         Attachment = attachment;
+        return this;
+    }
+
+
+    public mExpense setDARATE_SLAB_DOUBLESIDE(String DARATE_SLAB_DOUBLESIDE) {
+        this.DARATE_SLAB_DOUBLESIDE = DARATE_SLAB_DOUBLESIDE;
+        return this;
+    }
+
+    public mExpense setDCR_DISTANCE_ID(String DCR_DISTANCE_ID) {
+        this.DCR_DISTANCE_ID = DCR_DISTANCE_ID;
         return this;
     }
 

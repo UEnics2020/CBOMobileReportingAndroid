@@ -68,7 +68,9 @@ public class vmExpense extends CBOViewModel<IExpense> {
             //view.ActualDAReqd(expense.getACTUALDA_FAREYN().equalsIgnoreCase("Y"));
             view.ManualDA_TypeReqd(expense.getDA_TYPE_MANUALYN().equalsIgnoreCase("Y"));
             if (getExpense().getDA_TYPE_MANUALYN().equalsIgnoreCase("Y")) {
+                mDistance distance = getExpense().getSelectedDistance();
                 setSelectedDA(getExpense().getSelectedDA());
+                setSelectedDistance(distance);
             }
             view.ManualDAReqd(expense.getMANUAL_DAYN().equalsIgnoreCase("1"));
             view.ManualTAReqd(expense.getTA_TYPE_MANUALYN().equalsIgnoreCase("1"));
@@ -81,7 +83,6 @@ public class vmExpense extends CBOViewModel<IExpense> {
             view.OnDAExpenseUpdated(getExpense().getDA_Expenses());
             view.OnFinalRemarkReqd(IsFormForFinalSubmit());
             view.updateDAView();
-
         }
     }
 
@@ -150,7 +151,15 @@ public class vmExpense extends CBOViewModel<IExpense> {
     public void setSelectedDistance(mDistance distance) {
         getExpense().setDistance(distance);
         getExpense().getSelectedDA().setTA_Km(distance.getKm());
-        getExpense().getSelectedDA().setTA_Rate(getExpense().getRateFor(getExpense().getSelectedDA().getTA_Km()).getRate());
+        getExpense().getSelectedDA()
+                .setTA_Rate(getExpense()
+                        .getRateFor(
+                                getExpense().getDARATE_SLAB_DOUBLESIDE()
+                                        .equalsIgnoreCase("Y")?
+                                        getExpense().getSelectedDA().getTA_Km()
+                                        : distance.getKm()
+                        ).getRate());
+
         getExpense().setTA_Amt(getExpense().getSelectedDA().getTAAmount());
 
         if (!getExpense().getTA_TYPE_MANUALYN().equalsIgnoreCase("1")) {
@@ -363,7 +372,9 @@ public class vmExpense extends CBOViewModel<IExpense> {
                     .setACTUALFAREYN(object.getString("ACTUALFAREYN"))
                     .setROUTE_CLASS(object.getString("ROUTE_CLASS"))
                     .setACTUALFARE_MAXAMT(object.getDouble("ACTUALFARE_MAXAMT"))
-                    .setACTUALFAREYN_MANDATORY(object.getString("ACTUALFAREYN_MANDATORY"));
+                    .setACTUALFAREYN_MANDATORY(object.getString("ACTUALFAREYN_MANDATORY"))
+                    .setDCR_DISTANCE_ID(object.getString("DCR_DISTANCE_ID"))
+                    .setDARATE_SLAB_DOUBLESIDE(object.getString("DARATE_SLAB_DOUBLESIDE"));
         }
 
 
@@ -437,6 +448,10 @@ public class vmExpense extends CBOViewModel<IExpense> {
             distance.setMANUAL_TAYN(object1.getString("MANUAL_TAYN"));
             distance.setMANUAL_TAYN_MANDATORY(object1.getString("MANUAL_TAYN_MANDATORY"));
 
+            if (expense.getDCR_DISTANCE_ID().equalsIgnoreCase(distance.getId())) {
+                //view.setManualDA(da);
+                getExpense().setDistance(distance);
+            }
             expense.getDistances().add(distance);
         }
         String table5 = result.getString("Tables5");
