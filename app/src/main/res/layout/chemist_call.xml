@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/textColorPrimary"
+    android:orientation="vertical">
+
+    <include layout="@layout/hadder_2016" />
+
+    <LinearLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:weightSum="3">
+
+
+        <Button
+            android:id="@+id/call"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="2"
+            android:background="@drawable/tab_selected"
+            android:elevation="6dp"
+            android:text="Call"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/summary"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="2"
+            android:background="@drawable/tab_deselected"
+            android:text="Summary"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/tab_sellected"
+        android:weightSum="3">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/custom_square_transparent_bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/call_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/unknown"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/chm_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+
+                        >
+
+                        <utils.font_package.Text_view_Regular
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Location"
+                            android:textColor="@color/navigationBarColor"
+                            android:textSize="17dp" />
+
+                        <utils.font_package.Text_view_Regular
+                            android:id="@+id/loc_chem"
+                            android:layout_width="match_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="10dp"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:textColor="@color/navigationBarColor" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <utils.font_package.Text_view_Regular
+                            android:id="@+id/chemist_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="0dp"
+                            android:gravity="center"
+                            android:text="Chemist Name"
+                            android:textColor="@color/navigationBarColor"
+                            android:textSize="17dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/drop_bg"
+                                android:orientation="horizontal">
+
+                                <utils.font_package.Button_Regular_black_text
+                                    android:id="@+id/chm_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:minHeight="40dp"
+                                    android:prompt="@string/spinner_title4"
+                                    android:textColor="@color/navigationBarColor"
+
+                                    />
+
+                                <View
+                                    android:layout_width="1.5dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="3.5dp"
+                                    android:layout_marginBottom="3.5dp"
+                                    android:background="@color/colorPrimaryDark" />
+
+                                <ImageView
+                                    android:id="@+id/spinner_img_chemist_call"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="1dp"
+                                    android:layout_weight="5"
+                                    android:padding="6.5dp"
+                                    app:srcCompat="@drawable/drop_icon" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/last_visited"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginRight="10dp"
+                                android:text="Last visited on 20/01/2017"
+                                android:textColor="#800000"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/visited"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <utils.font_package.Text_view_Regular
+                            android:id="@+id/not_visited"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="20dp"
+                            android:text="Chemist Not Visited"
+                            android:textColor="@color/navigationBarColor"
+                            android:textSize="17dp" />
+
+                        <CheckBox
+                            android:id="@+id/myck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/pob_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <utils.font_package.Text_view_Regular
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="POB Value"
+                            android:textColor="@color/navigationBarColor"
+                            android:textSize="17dp" />
+
+                        <utils.font_package.Edit_text_Regular
+                            android:id="@+id/chm_pob"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="10dp"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint="    Enter POB Value"
+                            android:inputType="number"
+                            android:textColor="@color/navigationBarColor" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/remak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Remark" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="28dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <utils.font_package.Button_Bold
+                            android:id="@+id/chm_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_text_view_selector"
+                            android:text="Products"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="18dp" />
+
+                        <utils.font_package.Button_Bold
+                            android:id="@+id/chm_gift"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_text_view_selector"
+                            android:text="Gift"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:id="@+id/promotion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                    </TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/gift_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></TableLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/btn_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/chm_battery_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="10dp"
+
+                    android:visibility="gone" />
+
+                <utils.font_package.Button_Bold
+                    android:id="@+id/chm_save"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+
+                    android:background="@drawable/button_text_view_selector"
+                    android:text="Submit Call"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="18dp" />
+
+                <utils.font_package.Button_Bold
+                    android:id="@+id/retail_save"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+
+                    android:background="@drawable/button_text_view_selector"
+                    android:text="Submit Call"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="18dp"
+                    android:visibility="gone"
+
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <ExpandableListView
+            android:id="@+id/summary_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/back"
+            android:background="#fff"
+            android:divider="#fff"
+            android:dividerHeight="0dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="active_filter">#fff</color>
+    <color name="colorAccent">#3e4095</color>
+    <color name="colorBasic">@android:color/holo_red_dark</color>
+    <color name="colorPrimary">#00afef</color>
+    <color name="colorPrimaryDark">#3e4095</color>
+    <color name="headerBg">#5999</color>
+    <color name="hyperLink">#3e60F3</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textcolor">#000000</color>
+    <string name="app_name">CBO Order</string>
+    <style name="Divider_Horizontal">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">0.8</item>
+        <item name="android:background">@color/textcolor</item>
+    </style>
+    <style name="Divider_Vertical">
+        <item name="android:layout_weight">0.8</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/textcolor</item>
+    </style>
+    <style name="Filter_active">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/active_filter</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Filter_inactive">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Filter_normal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Header_text_center">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Header_text_left">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Header_text_right">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_center">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_left">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_right">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

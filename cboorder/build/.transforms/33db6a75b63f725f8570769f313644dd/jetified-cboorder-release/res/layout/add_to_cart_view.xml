@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:id="@+id/minusButton"
+        android:text="-"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minWidth="45dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:text="0"
+        android:inputType="number"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/minusButton"
+        android:layout_toLeftOf="@+id/plusButton"
+        android:id="@+id/valueTextView" />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:id="@+id/plusButton"
+        android:text="+"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:layout_alignParentRight="true"
+        android:clickable="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addtocart"
+        android:text="ADD TO CART"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:clickable="true"/>
+
+</RelativeLayout>

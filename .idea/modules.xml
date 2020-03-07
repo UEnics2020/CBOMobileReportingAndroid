@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" filepath="$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" group="CBOMobileReporting/CBOLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/CBOMobileReporting.iml" filepath="$PROJECT_DIR$/CBOMobileReporting.iml" group="CBOMobileReporting" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="CBOMobileReporting/app" />
+      <module fileurl="file://$PROJECT_DIR$/attachment/attachment.iml" filepath="$PROJECT_DIR$/attachment/attachment.iml" group="CBOMobileReporting/attachment" />
+      <module fileurl="file://$PROJECT_DIR$/cbo_utils/cbo_utils.iml" filepath="$PROJECT_DIR$/cbo_utils/cbo_utils.iml" group="CBOMobileReporting/cbo_utils" />
+      <module fileurl="file://$PROJECT_DIR$/cboorder/cboorder.iml" filepath="$PROJECT_DIR$/cboorder/cboorder.iml" group="CBOMobileReporting/cboorder" />
+      <module fileurl="file://$PROJECT_DIR$/dbhelper/dbhelper.iml" filepath="$PROJECT_DIR$/dbhelper/dbhelper.iml" group="CBOMobileReporting/dbhelper" />
+    </modules>
+  </component>
+</project>

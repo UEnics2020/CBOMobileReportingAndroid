@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/hadder_2016" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager_introduction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include"
+        android:fitsSystemWindows="true" />
+
+
+
+    <LinearLayout
+        android:id="@+id/viewPagerCountDots"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/pager_introduction"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+      <RelativeLayout
+        android:id="@+id/control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:background="#00ffffff">
+
+        <ImageButton
+            android:id="@+id/back_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/gray_circle"
+            android:src="@drawable/ic_skip_previous_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/save_sample_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:padding="15dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/gray_circle"
+            android:src="@drawable/save_next"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/next_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/gray_circle"
+            android:src="@drawable/ic_skip_next_black_24dp" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/cancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/gray_circle"
+        android:src="@drawable/ic_cancel_black_24dp"/>
+
+
+</RelativeLayout>
