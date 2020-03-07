@@ -1,0 +1,31 @@
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:pivotX="50%" android:pivotY="50%" android:fromDegrees="0"
+    android:toDegrees="360">
+    <shape android:shape="ring" android:innerRadiusRatio="3"
+        android:thicknessRatio="30" android:useLevel="false">
+
+        <size
+            android:width="150dp"
+            android:height="150dp"
+            />
+        <gradient android:type="sweep" android:useLevel="false"
+            android:startColor="#000787"
+            android:endColor="#0077ffff"
+            android:angle="0"
+            />
+    </shape>
+</rotate>
+
+
+    <!-- <?xml version="1.0" encoding="utf-8"?>
+ <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+ <item>
+     <rotate
+         android:drawable="@drawable/cbo_noti"
+         android:fillAfter="true"
+         android:fromDegrees="0"
+         android:pivotX="50%"
+         android:pivotY="50%"
+         android:toDegrees="360" />
+ </item>
+ </layer-list>-->

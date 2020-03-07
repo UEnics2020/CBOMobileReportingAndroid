@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@color/transparent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.8"
+        android:paddingRight="3dp"
+        android:text="Total Sales"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1.2"
+        android:gravity="right"
+        android:padding="3dp"
+        android:text="Total"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12dp"
+        android:textStyle="normal" />
+
+
+    <TextView
+        android:id="@+id/tvcum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1.2"
+        android:gravity="right"
+        android:padding="3dp"
+        android:text="Total"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12dp"
+        android:textStyle="normal" />
+</LinearLayout>
