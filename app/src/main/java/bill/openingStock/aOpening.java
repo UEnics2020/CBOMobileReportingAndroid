@@ -41,7 +41,7 @@ public class aOpening extends RecyclerView.Adapter<aOpening.MyViewHolder> {
     @Override
     public aOpening.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.opening_row_view, parent, false);
+                .inflate(R.layout.opening_row_view_new, parent, false);
 
         return new aOpening.MyViewHolder(itemView);
     }
@@ -57,7 +57,7 @@ public class aOpening extends RecyclerView.Adapter<aOpening.MyViewHolder> {
         holder.enter_by.setText( mOpeninglist.getENTRY_BY());
         holder.no_item.setText(mOpeninglist.getNO_ITEM());//DATE
 
-        holder.customer_name.setText(mOpeninglist.getENTRY_BY());
+        //holder.customer_name.setText(mOpeninglist.getENTRY_BY());
         holder.companyName.setText(mOpeninglist.getCOMPANY_NAME());
 
         holder.delete.setVisibility(mOpeninglist.getDelete() ? View.VISIBLE : View.GONE);
@@ -74,11 +74,11 @@ public class aOpening extends RecyclerView.Adapter<aOpening.MyViewHolder> {
         holder.main_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.expand.getText().toString().equalsIgnoreCase("+")) {
-                    holder.expand.setText("-");
+                if (holder.detail_layout.getVisibility() == View.GONE) {
+                   // holder.expand.setText("-");
                     holder.detail_layout.setVisibility(View.VISIBLE);
                 } else {
-                    holder.expand.setText("+");
+                    //holder.expand.setText("+");
                     holder.detail_layout.setVisibility(View.GONE);
                 }
             }
@@ -138,7 +138,8 @@ public class aOpening extends RecyclerView.Adapter<aOpening.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView doc_date, doc_no, customer_name, companyName, enter_by, no_item, mobile, gst, amt, net_amt, payMode;
+        TextView doc_date, doc_no, customer_name, companyName, enter_by,
+                no_item, mobile, gst, amt, net_amt, payMode;
         ImageView edit, delete, billView;
         LinearLayout conatiner, detail_layout, main_layout;
         TextView expand;
@@ -155,9 +156,9 @@ public class aOpening extends RecyclerView.Adapter<aOpening.MyViewHolder> {
             doc_date = (TextView) view.findViewById(R.id.doc_date);
 
             no_item = (TextView) view.findViewById(R.id.no_item);
-            expand = view.findViewById(R.id.expand);
+            //expand = view.findViewById(R.id.expand);
 
-            customer_name = (TextView) view.findViewById(R.id.cust_name);
+            //customer_name = (TextView) view.findViewById(R.id.cust_name);
             mobile = (TextView) view.findViewById(R.id.mobile);
             gst = (TextView) view.findViewById(R.id.gst);
             amt = (TextView) view.findViewById(R.id.amount);

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new__order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_marginLeft="15dp"
+        android:text="Set Title"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:visibility="gone"
+        android:textSize="9pt"
+        style="@style/text_left"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5.5"
+        android:layout_below="@+id/title"
+        android:background="@color/headerBg"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:id="@+id/hed"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/Header_text_left"
+            android:text="Particulars"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="0.8dp"
+            android:layout_height="fill_parent"
+            android:background="#444"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/Header_text_right"
+            android:text="Rate"
+            android:layout_weight="1.5"/>
+        <View
+            android:layout_width="0.8dp"
+            android:layout_height="fill_parent"
+            android:background="#444"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/Header_text_right"
+            android:text="Qty."
+            android:layout_weight="1.5"/>
+        <View
+            android:layout_width="0.8dp"
+            android:layout_height="fill_parent"
+            android:background="#444"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/Header_text_right"
+            android:text="Amt."
+            android:layout_weight="1.5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Item in the List"
+        android:visibility="gone"
+        android:textSize="12sp"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#444"
+        android:dividerHeight="1dp"
+        android:id="@+id/new_order_list"
+        android:descendantFocusability="afterDescendants"
+        android:layout_below="@+id/hed"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </ListView>
+
+
+
+
+</RelativeLayout>

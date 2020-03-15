@@ -1,102 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:background="#04000000">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="5dp"
+    android:elevation="2dp"
+    android:layout_margin="5dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    card_view:cardElevation="5dp"
+    >
 
 
-
-    <TextView
-        android:text="Batch"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="2"
-        android:textSize="14dp"
-        android:gravity="center_vertical"
-        android:id="@+id/batch_no"
-        android:layout_marginLeft="5dip"
-        android:layout_width="0px"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/distance"
-        android:layout_toStartOf="@+id/distance" />
-
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/pack"
-        android:text="Pack"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="1.4"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"/>
+        android:background="@drawable/underline_bg"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_layout"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/batch_no"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginLeft="3dp"
+                        android:text="Party Name"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/pack"
+                        android:text="Pack"
+                        android:textSize="14dp"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
 
 
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/exp"
-        android:text="Exp"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="1.2"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/mfg"
-        android:text="Mrp"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="1.2"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/rate"
-        android:text="Rate"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="1.4"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/stock"
-        android:text="Stock"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="2"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
 
-</LinearLayout>
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/rate"
+                    android:text="Rate"
+                    android:paddingRight="3dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/calendar"
+                        android:visibility="visible"
+                        android:padding="3dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:text="Exp. : "
+                        android:textSize="13dp"/>
+                    <TextView
+                        android:id="@+id/exp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingRight="3dp"
+                    android:gravity="center_vertical|end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:text="MRP : "
+                        android:textSize="13dp"/>
+                    <TextView
+                        android:id="@+id/mrp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:minWidth="80dp"
+            android:background="#7fbf7f"
+            >
+            <LinearLayout
+                android:id="@+id/amtLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="3dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Stock"
+                    android:layout_weight="1"
+                    android:textStyle="normal"
+                    android:textColor="#fff"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2560"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

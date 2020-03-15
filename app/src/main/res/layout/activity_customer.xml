@@ -28,7 +28,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_margin="5dp"
-            android:background="@drawable/input_txt">
+            android:background="@drawable/custom_round_white_view_bg">
 
             <EditText
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@drawable/input_txt"
+            android:background="@drawable/custom_round_white_view_bg"
             android:layout_margin="5dp"
             android:id="@+id/doc_date_layout"
             android:orientation="horizontal">

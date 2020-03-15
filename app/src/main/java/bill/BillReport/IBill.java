@@ -13,6 +13,7 @@ public interface IBill {
     String getActivityTitle();
     void onBillListlistchange(ArrayList<mBill> billlist);
     void updateTotBillAmt(Double totamt);
+    void addBill(FBillFilter billFilter);
     void onBillDeleted(Context context);
     void setCompanyName(String CompanyName);
     String getCompanyName();

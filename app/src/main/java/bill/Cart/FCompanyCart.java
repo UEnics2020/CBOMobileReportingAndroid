@@ -44,7 +44,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
 
     private TextView Total_amt,SGST_amt,CGST_amt,roundAmt;
     private TextView centralTaxName,LocalTaxName,expand;
-    private LinearLayout centralTax,LocalTax,billdet,billdet_inside,cartTotLayout,header;
+    private LinearLayout centralTax,LocalTax,billdet,billdet_inside,cartTotLayout,header,footer;
 
 
     @Override
@@ -101,6 +101,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
         billdet_inside = view.findViewById(R.id.billdet_inside);
         cartTotLayout = view.findViewById(R.id.cartTotLayout);
         header = view.findViewById(R.id.header);
+        footer = view.findViewById(R.id.footer);
 
 
         itemlist_filter = (RecyclerView) view.findViewById(R.id.cart_list);
@@ -210,6 +211,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
         cartAdapter.update (viewModel.getOrder ());
         header.setVisibility(order.getItems().size()>0 ?View.VISIBLE:View.GONE);
         billdet.setVisibility(order.getItems().size()>0 ?View.VISIBLE:View.GONE);
+        footer.setVisibility(order.getItems().size()>0 ?View.VISIBLE:View.GONE);
         CalculateTotal ();
     }
 
@@ -241,7 +243,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
         //title = "New Order";
         if (viewModel.getOrder ().getDocId ().equalsIgnoreCase ("0")) {
             //itemFilter.performClick ();
-            title = "New Bill";
+            title = "New Sale";
 
         }else if (viewModel.getOrder ().getStatus ().equalsIgnoreCase ("E")) {
             itemFilter.setVisibility (View.GONE);

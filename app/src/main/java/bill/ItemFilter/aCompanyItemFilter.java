@@ -31,12 +31,13 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     private IitemFilter listener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, stock;
+        public TextView name, stock,character;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             stock = (TextView) view.findViewById(R.id.stock);
+            character = view.findViewById(R.id.character);
         }
     }
 
@@ -80,7 +81,13 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
         holder.name.setText(item.getName());
         holder.stock.setText(""+item.getStock());
 
+        if (item != null && item.getName().length()>0)
+            holder.character.setText(item.getName().substring(0,1).toUpperCase());
 
+        final Drawable drawable = holder.character.getBackground();
+        Random rnd = new Random();
+        final int[] color = {Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))};
+        drawable.setColorFilter(color[0], PorterDuff.Mode.SRC_IN);
 
         holder.itemView.setOnClickListener(
                 new View.OnClickListener() {

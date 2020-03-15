@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +41,7 @@ import utils_new.CustomDialog.Spinner_Dialog;
 public class FBillFilter extends Fragment implements ICompany {
     private static final int COMPANY_FILTER = 0;
     LinearLayout Lname, LFDate, LTDate;
-    Button name, FDateBtn, TDateBtn;
+    TextView name, FDateBtn, TDateBtn;
     Context context;
     ImageView spinImgName, spinImgMonth, img_missed_type;
     mCompany selectedCompany;

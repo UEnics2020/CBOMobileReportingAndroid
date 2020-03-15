@@ -15,6 +15,7 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:id="@+id/header"
+        android:visibility="gone"
         android:background="@color/headerBg"
         android:orientation="horizontal">
 

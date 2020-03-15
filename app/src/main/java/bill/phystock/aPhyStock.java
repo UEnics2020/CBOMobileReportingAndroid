@@ -25,7 +25,7 @@ import cbomobilereporting.cbo.com.cboorder.Utils.AddToCartView;
 import utils_new.AppAlert;
 import utils_new.interfaces.RecycleViewOnItemClickListener;
 
-public class aPhyStock extends RecyclerView.Adapter<aPhyStock.CartItemViewHolder> {
+public class aPhyStock extends RecyclerView.Adapter<aPhyStock.ProductViewHolder> {
 
     RecycleViewOnItemClickListener recycleViewOnItemClickListener = null;
     private Context mContext;
@@ -54,62 +54,33 @@ public class aPhyStock extends RecyclerView.Adapter<aPhyStock.CartItemViewHolder
     }
 
     @Override
-    public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
-       /* itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_bill_card, parent, false);
-        return new ProductViewHolder(itemView);*/
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phy_stock_card_new, parent, false);
+        return new ProductViewHolder(itemView);
 
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phy_stock_card, parent, false);
-        return new CartItemViewHolder(itemView);
+       /* itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phy_stock_card, parent, false);
+        return new CartItemViewHolder(itemView);*/
 
     }
 
-   /* @Override
+    @Override
     public void onBindViewHolder(final ProductViewHolder holder, int position) {
         mBillItem item = order.getItems().get(position);
 
         holder.brand.setText(item.getName());
-        holder.net_amount.setText( AddToCartView.toCurrency(String.format("%.2f", item.getAmt())));
         holder.batch.setText(item.getBATCH_NO());
         holder.pack.setText("( "+item.getPACK() + " )");
-        holder.amount.setText( AddToCartView.toCurrency(String.format("%.2f", item.getAmt())));
-        holder.Qty.setText(String.format("%.0f",item.getQty()));
-                if (item.getDeal().getType() != eDeal.NA) {
-                    holder.rate.setText(String.format("%.0f", item.getQty()) +
-                            " X " + AddToCartView.toCurrency(String.format("%.2f", item.getSALE_RATE())) +
-                            " + " + item.getFreeQty());
-                }else{
-                    holder.rate.setText(String.format("%.0f", item.getQty()) +
-                            " X " + AddToCartView.toCurrency(String.format("%.2f", item.getSALE_RATE())));
-                }
-        holder.discountName.setText("Discount " + item.getDiscountStr());
-        holder.discount.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getAmt() - item.getNetAmt()))));
 
-                if (item.getGST().getSGST() == 0){
-                    holder.LocalTax.setVisibility(View.GONE);
-                    holder.centralTaxName.setText(eTax.IGST.name() +" @" + item.getGST().getCGST() +"%");
-                }else{
-                    holder.LocalTax.setVisibility(View.VISIBLE);
-                    holder.centralTaxName.setText(eTax.CGST.name() +" @" + item.getGST().getCGST() +"%");
-                }
-
-        holder.LocalTaxName.setText(eTax.SGST.name() +" @ " + item.getGST().getSGST() +"%");
-
-        holder.CGST_amt.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getCGSTAmt()))));
-        holder.SGST_amt.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getSGSTAmt()))));
-        holder.brand_tot_amt.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getTotAmt()))));
-
-       *//* holder.remark.setText(item.getRemark());
-        holder.remarkTitle.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("SALE_ORDER_REMARK_TITLE","Remark"));
-        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*//*
+        holder.missmatch.setText(String.format("%.2f",item.getStock()- item.getQty()));
+        holder.avl_stock.setText(String.format("%.2f",item.getStock()));
+        holder.phyStock.setText(String.format("%.2f", item.getQty()));
 
 
+    }
 
 
-    }*/
-
-
-    @Override
+ /*   @Override
     public void onBindViewHolder(final CartItemViewHolder holder, int position) {
         mBillItem item = order.getItems().get(position);
 
@@ -156,12 +127,12 @@ public class aPhyStock extends RecyclerView.Adapter<aPhyStock.CartItemViewHolder
         holder.SGST_amt.setText(String.format("%.2f", (item.getSGSTAmt())));
         holder.brand_tot_amt.setText(String.format("%.2f", (item.getTotAmt())));
 
-       /* holder.remark.setText(item.getRemark());
+       *//* holder.remark.setText(item.getRemark());
         holder.remarkTitle.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("SALE_ORDER_REMARK_TITLE","Remark"));
-        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*/
+        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*//*
 
 
-    }
+    }*/
 
 
     public void setOnClickListner(RecycleViewOnItemClickListener recycleViewOnItemClickListener) {
@@ -285,70 +256,26 @@ public class aPhyStock extends RecyclerView.Adapter<aPhyStock.CartItemViewHolder
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
-        private TextView brand, pack, batch, rate, amount, net_amount, brand_tot_amt, SGST_amt, CGST_amt;
-        private TextView Qty, discountName, discount, centralTaxName, LocalTaxName, remark, remarkTitle;
+        private TextView brand, pack, batch, avl_stock, phyStock,missmatch;
         private ImageView delete, edit;
-        private ImageButton more;
-        private RelativeLayout sapratorLayout;
-        private LinearLayout extraLayout, centralTax, LocalTax, remarkLayout;
 
         public ProductViewHolder(View view) {
             super(view);
             brand = (TextView) view.findViewById(R.id.brand);
-            net_amount = (TextView) view.findViewById(R.id.brand_net_amt);
             batch = (TextView) view.findViewById(R.id.brand_batch);
             pack = (TextView) view.findViewById(R.id.brand_pack);
-            Qty = (TextView) view.findViewById(R.id.Qty);
-            rate = view.findViewById(R.id.rate);
-            amount = view.findViewById(R.id.amount);
-            discountName = view.findViewById(R.id.discountName);
-            discount = view.findViewById(R.id.discount);
+            missmatch = (TextView) view.findViewById(R.id.missmatch);
+
+            avl_stock = (TextView) view.findViewById(R.id.avl_stock);
+            phyStock = (TextView) view.findViewById(R.id.phy_stock);
 
             edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
-            more = view.findViewById(R.id.more);
-
-            centralTax = view.findViewById(R.id.centralTax);
-            LocalTax = view.findViewById(R.id.LocalTax);
-            centralTaxName = view.findViewById(R.id.centralTaxName);
-            LocalTaxName = view.findViewById(R.id.LocalTaxName);
-            SGST_amt = view.findViewById(R.id.SGST_amt);
-            CGST_amt = view.findViewById(R.id.CGST_amt);
-
-            brand_tot_amt = view.findViewById(R.id.brand_tot_amt);
-
-            sapratorLayout = view.findViewById(R.id.sapratorLayout);
-            extraLayout = view.findViewById(R.id.extraLayout);
-
-            remark = view.findViewById(R.id.remark);
-            remarkTitle = view.findViewById(R.id.remarkTitle);
-            remarkLayout = view.findViewById(R.id.remarkLayout);
 
 
-            more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sapratorLayout.performClick();
-                }
-            });
-
-            sapratorLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
 
-                    if (extraLayout.getVisibility() == View.VISIBLE) {
-                        more.setRotation(0);
-                        extraLayout.setVisibility(View.GONE);
-                    } else {
-                        more.setRotation(180);
-                        extraLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-
-
-            if (!order.getStatus().equalsIgnoreCase("V")) {
+            if (order.getDocId().equalsIgnoreCase("0") || order.getStatus().equalsIgnoreCase("E")) {
                 delete.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.VISIBLE);
                 delete.setOnClickListener(new View.OnClickListener() {
@@ -388,12 +315,6 @@ public class aPhyStock extends RecyclerView.Adapter<aPhyStock.CartItemViewHolder
                 edit.setVisibility(View.GONE);
             }
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sapratorLayout.performClick();
-                }
-            });
 
         }
     }

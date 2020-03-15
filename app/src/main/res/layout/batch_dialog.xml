@@ -6,10 +6,44 @@
     android:layout_margin="10dp"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header1"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_hadder"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="?colorPrimaryDark"
+            app:popupTheme="@style/Theme.AppCompat"
+            android:elevation="6dp">
 
-    <include layout="@layout/hadder_2016"
-        android:id="@+id/header1"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/hadder_text_1"
+                    android:lines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gift "
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,13 +80,14 @@
    <TextView
        android:layout_width="match_parent"
        android:layout_height="3dp"
-       android:background="@color/colorPrimary"/>
+       android:background="?colorPrimaryDark"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:background="@color/headerBgLight">
 
 
@@ -150,7 +185,7 @@
 
     </LinearLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dip"

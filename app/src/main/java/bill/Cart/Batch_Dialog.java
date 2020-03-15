@@ -15,12 +15,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cbo.cbomobilereporting.R;
 
 import java.util.ArrayList;
 
 import bill.NewOrder.mBillBatch;
+import utils_new.interfaces.RecycleViewOnItemClickListener;
 
 
 public class Batch_Dialog {
@@ -66,17 +70,21 @@ public class Batch_Dialog {
 
         TextView filter =(TextView) view.findViewById(R.id.filterTxt);
         ImageView clearFilter = view.findViewById(R.id.clearQry);
-        ListView listview=(ListView) view.findViewById(R.id.list);
+        RecyclerView listview= view.findViewById(R.id.list);
 
         aBillBatch arrayAdapter=new aBillBatch(context, R.layout.bill_row,ListCopy);
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+        listview.setLayoutManager (mLayoutManager1);
+        listview.setItemAnimator (new DefaultItemAnimator());
         listview.setAdapter(arrayAdapter);
-        listview.setOnItemClickListener((parent, view1, position, id) -> {
-
-            dialog.dismiss();
-            if (Listener != null){
-                Listener.ItemSelected(ListCopy.get(position));
+        arrayAdapter.setListener(new RecycleViewOnItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                dialog.dismiss();
+                if (Listener != null){
+                    Listener.ItemSelected(ListCopy.get(position));
+                }
             }
-
         });
 
 

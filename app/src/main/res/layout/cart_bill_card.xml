@@ -54,7 +54,7 @@
                                 android:paddingLeft="5dp"
                                 android:textColor="@android:color/black"
                                 android:text="Treamal Inj 2 ml"
-                                android:textSize="15dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -169,6 +169,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:id="@+id/extraLayout">
 
                         <LinearLayout

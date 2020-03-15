@@ -103,6 +103,9 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.MyViewHold
         holder.headQtr.setText(item.getHeadQtr());
         holder.amt.setText(AddToCartView.toCurrency(item.getBalance()));
 
+        if (item != null && item.getName().length()>0)
+            holder.character.setText(item.getName().substring(0,1).toUpperCase());
+        
         final Drawable drawable = holder.character.getBackground();
         Random rnd = new Random();
         final int[] color = {Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))};

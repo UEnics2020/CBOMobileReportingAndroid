@@ -72,7 +72,7 @@ public class CompanyActivity extends CustomActivity {
 
 
         TextView title = toolbar.findViewById(R.id.title);
-        title.setText("Select Company");
+        title.setText("Select Outlet");
         TextView filterTxt = findViewById(R.id.filterTxt);
 
 
@@ -168,6 +168,15 @@ public class CompanyActivity extends CustomActivity {
             Companylist.remove(Companylist.size() - 1);
         }
         acustomer.update(Companylist);
+
+        if (!getIntent().getBooleanExtra("IS_DOC_DATE_CHANGEBLE", true) &&
+            Companylist.size() == 1){
+            if (getCallingActivity() == null) {
+                openCompanyCart(acustomer.getPartyAt(0));
+            }else{
+                onSendResponse(acustomer.getPartyAt(0));
+            }
+        }
 
         //bill_date_img.performClick();
 

@@ -164,7 +164,12 @@ public class DashboardBill extends CustomActivity implements
             Totamt.setText(String.format("%.2f", totamt));
         }
 
-        @Override
+    @Override
+    public void addBill(FBillFilter billFilter) {
+
+    }
+
+    @Override
         public void onBillDeleted(Context context) {
 
         }

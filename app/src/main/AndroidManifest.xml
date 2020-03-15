@@ -92,9 +92,11 @@
         <activity android:name="utils_new.cboUtils.attachmentsync.AttachmentSync" />
         <activity android:name=".ui_new.dcr_activities.pobmail.activity.selection.Selection" />
         <activity android:name=".ui_new.dcr_activities.pobmail.activity.pobmail.PobMail" />
-        <activity android:name="bill.phystock.PhyStockEntry" />
+        <activity android:name="bill.phystock.PhyStockEntry"
+            android:theme="@style/AppThemeNoBar"/>
         <activity android:name="bill.stockEntry.OpenScreenActivity" />
-        <activity android:name="bill.openingStock.OpeningStockActivity" />
+        <activity android:name="bill.openingStock.OpeningStockActivity"
+            android:theme="@style/AppThemeNoBar"/>
         <activity android:name=".ui_new.MyCamera" />
         <activity android:name=".ui_new.BarcodeReaderActivity" />
         <activity android:name="bill.BillReport.DashboardBill" />
@@ -466,10 +468,14 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="bill.BillReport.BillActivity"
+            android:theme="@style/AppThemeNoBar"
             android:configChanges="orientation|screenSize" />
-        <activity android:name="bill.CompanySelecter.CompanyActivity" />
-        <activity android:name="bill.Cart.CompanyCartActivity" />
-        <activity android:name="bill.ItemFilter.CompanyItemFilter" />
+        <activity android:name="bill.CompanySelecter.CompanyActivity"
+            android:theme="@style/AppThemeNoBar"/>
+        <activity android:name="bill.Cart.CompanyCartActivity"
+            android:theme="@style/AppThemeNoBar"/>
+        <activity android:name="bill.ItemFilter.CompanyItemFilter"
+            android:theme="@style/AppThemeNoBar"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

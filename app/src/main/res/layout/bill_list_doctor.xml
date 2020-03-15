@@ -15,6 +15,7 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:id="@+id/header"
+        android:visibility="gone"
         android:background="@color/headerBg"
         android:orientation="horizontal">
 
@@ -121,6 +122,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:id="@+id/footer"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@color/headerBg"
         android:orientation="horizontal">

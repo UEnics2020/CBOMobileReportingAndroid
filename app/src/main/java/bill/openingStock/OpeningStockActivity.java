@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -60,6 +61,7 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
     private FBillFilter fBillFilter;
     private SwipeRefreshLayout swipeRefressLayoutRecycler;
     private Menu menu;
+    private CardView addBill;
 
     private static final int COMPANY_FILTER = 0;
 
@@ -100,8 +102,12 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
 
         }
 
+        addBill = findViewById(R.id.add_bill);
+
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         fBillFilter = (FBillFilter) getSupportFragmentManager().findFragmentById(R.id.billfragment);
+
+        addBill.setOnClickListener((view)-> addNewStock(fBillFilter));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,6 +248,7 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));*/
         hideOption(R.id.action_filter);
+        hideOption(R.id.add);
         return true;
     }
 
@@ -269,18 +276,7 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
                 appBarLayout.setExpanded(false);
             return true;
         } else if (id == R.id.add) {
-
-
-
-            Intent intent = new Intent(context, CompanyActivity.class);
-            intent.putExtra("page", vmOpening.getPage());
-            intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.valueOf(vmOpening.getPage().getCode()));
-            intent.putExtra("Companies", fBillFilter.getCompanies());
-            intent.putExtra("PayModes", fBillFilter.getPayModes());
-            intent.putExtra("DocDate",fBillFilter.getDOCDATE());
-            intent.putExtra("IS_DOC_DATE_CHANGEBLE",fBillFilter.getDocDateChangble());
-            intent.putExtra("IS_DOC_DATE_Required",true);
-            startActivityForResult(intent,COMPANY_FILTER);
+            addNewStock(fBillFilter);
             //startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -302,6 +298,19 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
     @Override
     public String getActivityTitle() {
         return vmOpening.getPage().getTitle();
+    }
+
+    @Override
+    public void addNewStock(FBillFilter fBillFilter) {
+        Intent intent = new Intent(context, CompanyActivity.class);
+        intent.putExtra("page", vmOpening.getPage());
+        intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.valueOf(vmOpening.getPage().getCode()));
+        intent.putExtra("Companies", fBillFilter.getCompanies());
+        intent.putExtra("PayModes", fBillFilter.getPayModes());
+        intent.putExtra("DocDate",fBillFilter.getDOCDATE());
+        intent.putExtra("IS_DOC_DATE_CHANGEBLE",fBillFilter.getDocDateChangble());
+        intent.putExtra("IS_DOC_DATE_Required",true);
+        startActivityForResult(intent,COMPANY_FILTER);
     }
 
     @Override

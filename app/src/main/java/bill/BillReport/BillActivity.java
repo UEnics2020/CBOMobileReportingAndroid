@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -46,6 +47,7 @@ private RecyclerView  billrecyclerView;
 private aBill billadapter;
 private FloatingActionButton fab;
 private FBillFilter fBillFilter;
+private CardView addBill;
 private SwipeRefreshLayout swipeRefressLayoutRecycler;
 public  CollapsingToolbarLayout collapsingToolbarLayout;
 private  Menu menu;
@@ -79,6 +81,7 @@ private  Menu menu;
         swipeRefressLayoutRecycler = findViewById(R.id.swipeRefressLayoutRecycler);
         Totamt = findViewById(R.id.Totamt);
 
+        addBill = findViewById(R.id.add_bill);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
@@ -90,15 +93,11 @@ private  Menu menu;
         collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         fBillFilter = (FBillFilter) getSupportFragmentManager().findFragmentById(R.id.billfragment);
 
-        fab .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getBills();
+        fab .setOnClickListener(view -> getBills());
 
 
-            }
+        addBill.setOnClickListener((view)-> addBill(fBillFilter));
 
-        });
 
         if (vmBill.getOutlet() == null) {
             AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
@@ -203,6 +202,7 @@ private  Menu menu;
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));*/
         hideOption(R.id.action_filter);
+        hideOption(R.id.add);
         return true;
     }
 
@@ -231,14 +231,7 @@ private  Menu menu;
             return true;
         } else  if (id == R.id.add) {
 
-            Intent intent = new Intent(context, CompanyActivity.class);
-            intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.BILL);
-            intent.putExtra("Companies",fBillFilter.getCompanies());
-            intent.putExtra("PayModes",fBillFilter.getPayModes());
-            intent.putExtra("DocDate",fBillFilter.getDOCDATE());
-            intent.putExtra("IS_DOC_DATE_CHANGEBLE",fBillFilter.getDocDateChangble());
-            intent.putExtra("IS_DOC_DATE_Required",true);
-            startActivity(intent);
+            addBill(fBillFilter);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -274,6 +267,18 @@ private  Menu menu;
     @Override
     public void updateTotBillAmt(Double totamt) {
         Totamt.setText(String.format("%.2f", totamt));
+    }
+
+    @Override
+    public void addBill(FBillFilter billFilter) {
+        Intent intent = new Intent(context, CompanyActivity.class);
+        intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.BILL);
+        intent.putExtra("Companies",billFilter.getCompanies());
+        intent.putExtra("PayModes",billFilter.getPayModes());
+        intent.putExtra("DocDate",billFilter.getDOCDATE());
+        intent.putExtra("IS_DOC_DATE_CHANGEBLE",billFilter.getDocDateChangble());
+        intent.putExtra("IS_DOC_DATE_Required",true);
+        startActivity(intent);
     }
 
     @Override

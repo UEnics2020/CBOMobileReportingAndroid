@@ -17,7 +17,7 @@
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetStartWithNavigation="0dp"
-        android:background="?colorPrimary">
+        android:background="?colorPrimaryDark">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
                 android:text="Deliver To"
+                android:lines="1"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="17sp"/>
 
@@ -52,7 +53,7 @@
         android:id="@+id/fcompanyneworder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_fbill_dashboard" />
+        tools:layout="@layout/fragment_order_view" />
 
 
 

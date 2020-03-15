@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import bill.BillReport.FBillFilter;
 import bill.BillReport.mBill;
 import bill.BillReport.mCompany;
 import bill.Cart.mCustomer;
@@ -13,6 +14,7 @@ public interface IOpening {
     void getReferencesById();
     void setActvityTitle(String title);
     String getActivityTitle();
+    void addNewStock(FBillFilter fBillFilter);
     void onBillListlistchange(ArrayList<mOpening> billlist);
     void updateTotBillAmt(Double totamt);
     void onBillDeleted(Context context);

@@ -26,7 +26,7 @@ import utils_new.AppAlert;
 import utils_new.interfaces.RecycleViewOnItemClickListener;
 
 
-public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder> {
+public class aBillCart extends RecyclerView.Adapter<aBillCart.ProductViewHolder> {
 
     private Context mContext;
     private mBillOrder order;
@@ -47,17 +47,17 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder
     }
 
     @Override
-    public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
-       /* itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_bill_card, parent, false);
-        return new ProductViewHolder(itemView);*/
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_bill_card, parent, false);
+        return new ProductViewHolder(itemView);
 
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_bill_card, parent, false);
-        return new CartItemViewHolder(itemView);
+       /* itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_bill_card, parent, false);
+        return new CartItemViewHolder(itemView);*/
 
     }
 
-   /* @Override
+    @Override
     public void onBindViewHolder(final ProductViewHolder holder, int position) {
         mBillItem item = order.getItems().get(position);
 
@@ -75,7 +75,7 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder
                     holder.rate.setText(String.format("%.0f", item.getQty()) +
                             " X " + AddToCartView.toCurrency(String.format("%.2f", item.getSALE_RATE())));
                 }
-        holder.discountName.setText("Discount " + item.getDiscountStr());
+        //holder.discountName.setText("Discount " + item.getDiscountStr());
         holder.discount.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getAmt() - item.getNetAmt()))));
 
                 if (item.getGST().getSGST() == 0){
@@ -92,17 +92,17 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder
         holder.SGST_amt.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getSGSTAmt()))));
         holder.brand_tot_amt.setText(AddToCartView.toCurrency(String.format("%.2f",(item.getTotAmt()))));
 
-       *//* holder.remark.setText(item.getRemark());
+      /*  holder.remark.setText(item.getRemark());
         holder.remarkTitle.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("SALE_ORDER_REMARK_TITLE","Remark"));
-        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*//*
+        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);
+*/
 
 
 
+    }
 
-    }*/
 
-
-    @Override
+    /*@Override
     public void onBindViewHolder(final CartItemViewHolder holder, int position) {
         mBillItem item = order.getItems().get(position);
 
@@ -146,14 +146,14 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder
         holder.SGST_amt.setText(String.format("%.2f",(item.getSGSTAmt())));
         holder.brand_tot_amt.setText(String.format("%.2f",(item.getTotAmt())));
 
-       /* holder.remark.setText(item.getRemark());
+       *//* holder.remark.setText(item.getRemark());
         holder.remarkTitle.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("SALE_ORDER_REMARK_TITLE","Remark"));
-        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*/
+        holder.remarkLayout.setVisibility(item.getRemarkReqd()? View.VISIBLE: View.GONE);*//*
 
 
 
 
-    }
+    }*/
 
 
     public class CartItemViewHolder extends RecyclerView.ViewHolder {
@@ -328,7 +328,7 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.CartItemViewHolder
             });
 
 
-            if (!order.getStatus().equalsIgnoreCase("V")) {
+            if (order.getDocId ().equalsIgnoreCase ("0") || order.getStatus().equalsIgnoreCase("E")) {
                 delete.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.VISIBLE);
                 delete.setOnClickListener(new View.OnClickListener() {

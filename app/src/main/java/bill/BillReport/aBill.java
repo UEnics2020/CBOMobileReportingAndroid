@@ -48,7 +48,7 @@ public class aBill extends RecyclerView.Adapter<aBill.MyViewHolder>  {
             bill_no=(TextView) view.findViewById(R.id.doc_no);
 
             bill_date=(TextView) view.findViewById(R.id.date);
-            expand = view.findViewById(R.id.expand);
+            //expand = view.findViewById(R.id.expand);
 
             customer_name=(TextView) view.findViewById(R.id.cust_name);
             mobile=(TextView) view.findViewById(R.id.mobile);
@@ -86,7 +86,7 @@ public class aBill extends RecyclerView.Adapter<aBill.MyViewHolder>  {
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.bill_row_view, parent, false);
+                .inflate(R.layout.bill_row_view_new, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -99,7 +99,7 @@ public class aBill extends RecyclerView.Adapter<aBill.MyViewHolder>  {
             holder.bill_no.setText(mbilllist.getDOC_NO());
             //     holder.rec_name.setText(mbilllist.getParty().getName());
             holder.party_name.setText(mbilllist.getCOMPANY_NAME());
-            holder.bill_amt.setText(String.format("%.2f", mbilllist.getNET_AMT()));
+            holder.bill_amt.setText(AddToCartView.toCurrency(String.format("%.2f", mbilllist.getNET_AMT())));
             holder.bill_date.setText(CustomDatePicker.formatDate(mbilllist.getDOC_DATE(), CustomDatePicker.ShowFormatOld));//DATE
 
 
@@ -124,11 +124,11 @@ public class aBill extends RecyclerView.Adapter<aBill.MyViewHolder>  {
             holder.main_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (holder.expand.getText().toString().equalsIgnoreCase("+")){
-                        holder.expand.setText("-");
+                    if (holder.detail_layout.getVisibility() == View.GONE){
+                       // holder.expand.setText("-");
                         holder.detail_layout.setVisibility(View.VISIBLE);
                     }else{
-                        holder.expand.setText("+");
+                       // holder.expand.setText("+");
                         holder.detail_layout.setVisibility(View.GONE);
                     }
                 }

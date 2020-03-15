@@ -32,6 +32,7 @@
                 android:background="@color/headerBg"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -148,13 +149,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:id="@+id/billdet"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0px"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1.2"/>
 
@@ -167,7 +169,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/billdet_inside"
-                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -388,7 +389,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="20dp"
         android:paddingTop="10dp"
-        android:visibility="gone"
+        android:id="@+id/footer"
         android:background="@android:color/white">
         <LinearLayout
             android:layout_width="match_parent"
@@ -400,7 +401,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="Total Cart Value"
+                android:text="Total Bill Amount"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
 
