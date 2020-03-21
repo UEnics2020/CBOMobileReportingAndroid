@@ -22,9 +22,7 @@ import com.cbo.cbomobilereporting.MyCustumApplication;
 import com.cbo.cbomobilereporting.R;
 
 import bill.Cart.AddCustomer;
-import bill.Cart.ICompanyCart;
 import bill.Cart.IFCompanycart;
-import bill.Cart.aBillCart;
 import bill.Cart.mCustomer;
 import bill.Cart.vmFCompanyCart;
 import bill.ItemFilter.CompanyItemFilter;
@@ -49,9 +47,10 @@ public class FOpenCart extends Fragment implements IFCompanycart {
     private vmFCompanyCart viewModel;
     private mPage page;
 
-    private TextView Total_amt,SGST_amt,CGST_amt,roundAmt;
-    private TextView centralTaxName,LocalTaxName,expand;
-    private LinearLayout centralTax,LocalTax,billdet,billdet_inside,cartTotLayout,header;
+    private TextView Total_amt, SGST_amt, CGST_amt, roundAmt;
+    private TextView centralTaxName, LocalTaxName, expand;
+    private LinearLayout centralTax, LocalTax, billdet, billdet_inside, cartTotLayout, header;
+    private String filterStr = "";
 
 
     @Override
@@ -59,7 +58,8 @@ public class FOpenCart extends Fragment implements IFCompanycart {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case ITEM_FILTER:
-                    updateOrder((mBillOrder) data.getSerializableExtra ("order"));
+                    updateOrder((mBillOrder) data.getSerializableExtra("order"));
+                    filterStr = data.getStringExtra("filterText");
                     if (context instanceof IOpen) {
                         ((IOpen) context).updateOrder(viewModel.getOrder());
                     }
@@ -67,7 +67,7 @@ public class FOpenCart extends Fragment implements IFCompanycart {
                 case ADD_REMARK:
                 case ADD_CUSTOMER:
                     viewModel.setCustomer((mCustomer) data.getSerializableExtra("customer"));
-                    updateOrder((mBillOrder) data.getSerializableExtra ("order"));
+                    updateOrder((mBillOrder) data.getSerializableExtra("order"));
                     if (context instanceof IOpen) {
                         ((IOpen) context).updateOrder(viewModel.getOrder());
                     }
@@ -82,13 +82,13 @@ public class FOpenCart extends Fragment implements IFCompanycart {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate (R.layout.fragment__company_open_view, container, false);
+        return inflater.inflate(R.layout.fragment__company_open_view, container, false);
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated (view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
 
         cartNetAmount = view.findViewById(R.id.cartNetAmount);
         cartDiscount = view.findViewById(R.id.cartDiscount);
@@ -120,21 +120,22 @@ public class FOpenCart extends Fragment implements IFCompanycart {
 
         saveOrder = view.findViewById(R.id.saveOrder);
 
-        context = (AppCompatActivity) getActivity ();
+        context = (AppCompatActivity) getActivity();
 
 
-        viewModel = ViewModelProviders.of (this).get (vmFCompanyCart.class);
+        viewModel = ViewModelProviders.of(this).get(vmFCompanyCart.class);
         page = (mPage) context.getIntent().getSerializableExtra("page");
-        viewModel.setCustomer((mCustomer) context.getIntent ().getSerializableExtra("customer"));
+        viewModel.setCustomer((mCustomer) context.getIntent().getSerializableExtra("customer"));
 
-        viewModel.setOrder ((mBillOrder) context.getIntent ().getSerializableExtra ("order"));
-        viewModel.setView (context, this);
+        viewModel.setOrder((mBillOrder) context.getIntent().getSerializableExtra("order"));
+        viewModel.setView(context, this);
 
-        itemFilter.setOnClickListener (v -> {
-            Intent intent = new Intent (context, CompanyItemFilter.class);
-            intent.putExtra ("order", viewModel.getOrder ());
+        itemFilter.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CompanyItemFilter.class);
+            intent.putExtra("order", viewModel.getOrder());
             intent.putExtra("syncItem", !viewModel.isLoaded());
-            startActivityForResult (intent, ITEM_FILTER);
+            intent.putExtra("filterText", filterStr);
+            startActivityForResult(intent, ITEM_FILTER);
 
         });
 
@@ -142,10 +143,10 @@ public class FOpenCart extends Fragment implements IFCompanycart {
             @Override
             public void onClick(View v) {
 
-                if (billdet_inside.getVisibility()== View.VISIBLE){
+                if (billdet_inside.getVisibility() == View.VISIBLE) {
                     billdet_inside.setVisibility(View.GONE);
                     expand.setText("+");
-                }else{
+                } else {
                     billdet_inside.setVisibility(View.VISIBLE);
                     expand.setText("-");
                 }
@@ -157,12 +158,12 @@ public class FOpenCart extends Fragment implements IFCompanycart {
             @Override
             public void onClick(View v) {
                 //orderCommit();
-                if (!viewModel.getOrder ().getDocId ().equalsIgnoreCase ("0")
-                        && viewModel.getOrder ().getStatus ().equalsIgnoreCase ("V")){
+                if (!viewModel.getOrder().getDocId().equalsIgnoreCase("0")
+                        && viewModel.getOrder().getStatus().equalsIgnoreCase("V")) {
                     context.onBackPressed();
-                }else if( viewModel.getOrder().getItems().size() == 0){
-                    AppAlert.getInstance().getAlert(context,"No Item !!!!","Please add atleast one item to the cart... ");
-                }else {
+                } else if (viewModel.getOrder().getItems().size() == 0) {
+                    AppAlert.getInstance().getAlert(context, "No Item !!!!", "Please add atleast one item to the cart... ");
+                } else {
                     AddRemark();
                     //orderCommit();
                     //AddCustomer();
@@ -171,24 +172,24 @@ public class FOpenCart extends Fragment implements IFCompanycart {
         });
 
 
-        cartAdapter = new aOpenCart (context, viewModel.getOrder ());
+        cartAdapter = new aOpenCart(context, viewModel.getOrder());
         cartAdapter.setPage(page);
         RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
-        itemlist_filter.setLayoutManager (mLayoutManager1);
-        itemlist_filter.setItemAnimator (new DefaultItemAnimator());
-        itemlist_filter.setAdapter (cartAdapter);
+        itemlist_filter.setLayoutManager(mLayoutManager1);
+        itemlist_filter.setItemAnimator(new DefaultItemAnimator());
+        itemlist_filter.setAdapter(cartAdapter);
 
-        cartAdapter.setOnClickListner (new RecycleViewOnItemClickListener() {
+        cartAdapter.setOnClickListner(new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if (view.getId () == R.id.delete) {
-                    CalculateTotal ();
-                }else if (view.getId () == R.id.edit) {
+                if (view.getId() == R.id.delete) {
+                    CalculateTotal();
+                } else if (view.getId() == R.id.edit) {
                     if (context instanceof IOpen) {
-                        ((IOpen) context).onItemEdit(viewModel.getOrder ().getItems().get(position));
+                        ((IOpen) context).onItemEdit(viewModel.getOrder().getItems().get(position));
                     }
-                }else if (view.getId () == R.id.add_to_cart) {
-                    CalculateTotal ();
+                } else if (view.getId() == R.id.add_to_cart) {
+                    CalculateTotal();
                 }
             }
         });
@@ -206,23 +207,22 @@ public class FOpenCart extends Fragment implements IFCompanycart {
 
     @Override
     public String getCompanyCode() {
-        return MyCustumApplication.getInstance ().getUser ().getCompanyCode ();
+        return MyCustumApplication.getInstance().getUser().getCompanyCode();
     }
 
     @Override
     public String getUserId() {
-        return MyCustumApplication.getInstance ().getUser ().getID ();
+        return MyCustumApplication.getInstance().getUser().getID();
     }
-
 
 
     @Override
     public void updateOrder(mBillOrder order) {
-        viewModel.setOrder (order);
-        cartAdapter.update (viewModel.getOrder ());
-        header.setVisibility(order.getItems().size()>0 ?View.VISIBLE:View.GONE);
+        viewModel.setOrder(order);
+        cartAdapter.update(viewModel.getOrder());
+        header.setVisibility(order.getItems().size() > 0 ? View.VISIBLE : View.GONE);
         //billdet.setVisibility(order.getItems().size()>0 ?View.VISIBLE:View.GONE);
-        CalculateTotal ();
+        CalculateTotal();
     }
 
     @Override
@@ -230,7 +230,7 @@ public class FOpenCart extends Fragment implements IFCompanycart {
         viewModel.addItem(item);
         if (context instanceof IOpen) {
 
-            ((IOpen) context).updateOrder (viewModel.getOrder ());
+            ((IOpen) context).updateOrder(viewModel.getOrder());
         }
     }
 
@@ -240,10 +240,9 @@ public class FOpenCart extends Fragment implements IFCompanycart {
         viewModel.setOrder(order);
 
 
-        updateTotal ();
+        updateTotal();
 
     }
-
 
 
     @Override
@@ -251,22 +250,22 @@ public class FOpenCart extends Fragment implements IFCompanycart {
 
         String title = "";
         //title = "New Order";
-        if (viewModel.getOrder ().getDocId ().equalsIgnoreCase ("0")) {
+        if (viewModel.getOrder().getDocId().equalsIgnoreCase("0")) {
             //itemFilter.performClick ();
             title = "New Document";
 
-        }else if (viewModel.getOrder ().getStatus ().equalsIgnoreCase ("E")) {
-            itemFilter.setVisibility (View.GONE);
-            title = "Document No. :- " + viewModel.getOrder ().getBillNo ();
+        } else if (viewModel.getOrder().getStatus().equalsIgnoreCase("E")) {
+            itemFilter.setVisibility(View.GONE);
+            title = "Document No. :- " + viewModel.getOrder().getBillNo();
 
-        }else  {
-            itemFilter.setVisibility (View.GONE);
-            title = "Document No. :- " + viewModel.getOrder ().getBillNo ();
-            saveOrder.setText ("<< Back");
+        } else {
+            itemFilter.setVisibility(View.GONE);
+            title = "Document No. :- " + viewModel.getOrder().getBillNo();
+            saveOrder.setText("<< Back");
         }
 
         if (context instanceof IOpen) {
-            ((IOpen) context).setTitle (title);
+            ((IOpen) context).setTitle(title);
 
         }
     }
@@ -274,11 +273,11 @@ public class FOpenCart extends Fragment implements IFCompanycart {
     @Override
     public void AddCustomer() {
 
-        Intent intent = new Intent (context, AddCustomer.class);
-        intent.putExtra("customer",viewModel.getCustomer());
-        intent.putExtra("order",viewModel.getOrder());
-        intent.putExtra("PayModes",getArguments().getSerializable("PayModes"));
-        startActivityForResult (intent, ADD_CUSTOMER);
+        Intent intent = new Intent(context, AddCustomer.class);
+        intent.putExtra("customer", viewModel.getCustomer());
+        intent.putExtra("order", viewModel.getOrder());
+        intent.putExtra("PayModes", getArguments().getSerializable("PayModes"));
+        startActivityForResult(intent, ADD_CUSTOMER);
     }
 
     @Override
@@ -290,13 +289,13 @@ public class FOpenCart extends Fragment implements IFCompanycart {
     @Override
     public void orderCommit() {
 
-        if (!viewModel.getOrder ().getDocId ().equalsIgnoreCase ("0")
-                && viewModel.getOrder ().getStatus ().equalsIgnoreCase ("V")){
+        if (!viewModel.getOrder().getDocId().equalsIgnoreCase("0")
+                && viewModel.getOrder().getStatus().equalsIgnoreCase("V")) {
             context.onBackPressed();
-        }else if( viewModel.getOrder().getItems().size() == 0){
-            AppAlert.getInstance().getAlert(context,"No Item !!!!","Please add atleast one item to the cart... ");
-        }else{
-            viewModel.orderCommitAll(context,page.getOnFinalizeApi(),"CASH");
+        } else if (viewModel.getOrder().getItems().size() == 0) {
+            AppAlert.getInstance().getAlert(context, "No Item !!!!", "Please add atleast one item to the cart... ");
+        } else {
+            viewModel.orderCommitAll(context, page.getOnFinalizeApi(), "CASH");
         }
     }
 
@@ -306,45 +305,45 @@ public class FOpenCart extends Fragment implements IFCompanycart {
         Double Amt = 0.0;
         Double CGST = 0.0;
         Double SGST = 0.0;
-        for (mBillItem orderItem : viewModel.getOrder ().getItems ()) {
-            netAmt = netAmt + orderItem.getNetAmt ();
-            Amt = Amt + orderItem.getAmt ();
-            CGST = CGST + orderItem.getCGSTAmt ();
-            SGST = SGST + orderItem.getSGSTAmt ();
+        for (mBillItem orderItem : viewModel.getOrder().getItems()) {
+            netAmt = netAmt + orderItem.getNetAmt();
+            Amt = Amt + orderItem.getAmt();
+            CGST = CGST + orderItem.getCGSTAmt();
+            SGST = SGST + orderItem.getSGSTAmt();
         }
-        viewModel.getOrder ().setNetAmt ( netAmt);
-        viewModel.getOrder ().setSGSTAmt ( SGST);
-        viewModel.getOrder ().setCGSTAmt ( CGST);
-        viewModel.getOrder ().setAmt ( Amt);
+        viewModel.getOrder().setNetAmt(netAmt);
+        viewModel.getOrder().setSGSTAmt(SGST);
+        viewModel.getOrder().setCGSTAmt(CGST);
+        viewModel.getOrder().setAmt(Amt);
 
-        viewModel.getOrder ().setTotAmt ( netAmt+SGST+CGST);
-        updateTotal ();
-        header.setVisibility(viewModel.getOrder ().getItems().size()>0 ?View.VISIBLE:View.GONE);
+        viewModel.getOrder().setTotAmt(netAmt + SGST + CGST);
+        updateTotal();
+        header.setVisibility(viewModel.getOrder().getItems().size() > 0 ? View.VISIBLE : View.GONE);
         //billdet.setVisibility(viewModel.getOrder ().getItems().size()>0 ?View.VISIBLE:View.GONE);
     }
 
     @Override
     public void updateTotal() {
-        String Total = String.format("%.2f",viewModel.getOrder ().getNetAmt ());
-        String subTotal = String.format("%.2f",viewModel.getOrder ().getAmt ());
-        String discount = String.format("%.2f",viewModel.getOrder ().getAmt () - viewModel.getOrder ().getNetAmt ());
+        String Total = String.format("%.2f", viewModel.getOrder().getNetAmt());
+        String subTotal = String.format("%.2f", viewModel.getOrder().getAmt());
+        String discount = String.format("%.2f", viewModel.getOrder().getAmt() - viewModel.getOrder().getNetAmt());
 
 
-        CGST_amt.setText(AddToCartView.toCurrency ( String.format("%.2f",viewModel.getOrder ().getCGSTAmt ())));
-        SGST_amt.setText(AddToCartView.toCurrency ( String.format("%.2f",viewModel.getOrder ().getSGSTAmt ())));
-        cartDiscount.setText (AddToCartView.toCurrency (discount));
-        cartSubTotal.setText (AddToCartView.toCurrency (subTotal));
+        CGST_amt.setText(AddToCartView.toCurrency(String.format("%.2f", viewModel.getOrder().getCGSTAmt())));
+        SGST_amt.setText(AddToCartView.toCurrency(String.format("%.2f", viewModel.getOrder().getSGSTAmt())));
+        cartDiscount.setText(AddToCartView.toCurrency(discount));
+        cartSubTotal.setText(AddToCartView.toCurrency(subTotal));
 
-        cartNetAmount.setText (AddToCartView.toCurrency (Total));
-        roundAmt.setText ( String.format("%.2f",viewModel.getOrder ().getRouAmt ()));
-        Total_amt.setText (AddToCartView.toCurrency ( String.format("%.2f",viewModel.getOrder ().getTotAmt ())));
+        cartNetAmount.setText(AddToCartView.toCurrency(Total));
+        roundAmt.setText(String.format("%.2f", viewModel.getOrder().getRouAmt()));
+        Total_amt.setText(AddToCartView.toCurrency(String.format("%.2f", viewModel.getOrder().getTotAmt())));
 
-        cartTotal_out.setText (Total_amt.getText().toString());
+        cartTotal_out.setText(Total_amt.getText().toString());
 
-        if (viewModel.getOrder ().getSGSTAmt () == 0){
+        if (viewModel.getOrder().getSGSTAmt() == 0) {
             LocalTax.setVisibility(View.GONE);
             centralTaxName.setText(eTax.IGST.name());
-        }else{
+        } else {
             LocalTax.setVisibility(View.VISIBLE);
             centralTaxName.setText(eTax.CGST.name());
         }
@@ -360,11 +359,11 @@ public class FOpenCart extends Fragment implements IFCompanycart {
 
     @Override
     public void AddRemark() {
-        Intent intent = new Intent (context, AddRemark.class);
-        intent.putExtra("customer",viewModel.getCustomer());
-        intent.putExtra("order",viewModel.getOrder());
-        intent.putExtra("PayModes",getArguments().getSerializable("PayModes"));
-        startActivityForResult (intent, ADD_REMARK);
+        Intent intent = new Intent(context, AddRemark.class);
+        intent.putExtra("customer", viewModel.getCustomer());
+        intent.putExtra("order", viewModel.getOrder());
+        intent.putExtra("PayModes", getArguments().getSerializable("PayModes"));
+        startActivityForResult(intent, ADD_REMARK);
     }
 
 

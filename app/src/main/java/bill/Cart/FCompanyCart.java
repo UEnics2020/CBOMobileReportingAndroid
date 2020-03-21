@@ -45,6 +45,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
     private TextView Total_amt,SGST_amt,CGST_amt,roundAmt;
     private TextView centralTaxName,LocalTaxName,expand;
     private LinearLayout centralTax,LocalTax,billdet,billdet_inside,cartTotLayout,header,footer;
+    private String filterStr="";
 
 
     @Override
@@ -53,6 +54,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
             switch (requestCode) {
                 case ITEM_FILTER:
                     updateOrder((mBillOrder) data.getSerializableExtra ("order"));
+                    filterStr=data.getStringExtra("filterText");
                     if (context instanceof ICompanyCart) {
                         ((ICompanyCart) context).updateOrder(viewModel.getOrder());
                     }
@@ -126,6 +128,7 @@ public class FCompanyCart extends Fragment implements IFCompanycart {
             Intent intent = new Intent (context, CompanyItemFilter.class);
             intent.putExtra ("order", viewModel.getOrder ());
             intent.putExtra("syncItem", !viewModel.isLoaded());
+            intent.putExtra("filterText", filterStr);//!viewModel.isLoaded());
             startActivityForResult (intent, ITEM_FILTER);
 
         });

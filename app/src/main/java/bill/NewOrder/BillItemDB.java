@@ -141,7 +141,6 @@ public class BillItemDB extends DBHelper {
     public ArrayList<mBillItem> itemsNew(String filter_text) {
         ArrayList<mBillItem> items = new ArrayList();
 
-        MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("KEY_FILTER",filter_text);
 
         String Qry = "select * from " + this.getTable() + " where ITEM_NAME !=''";
 

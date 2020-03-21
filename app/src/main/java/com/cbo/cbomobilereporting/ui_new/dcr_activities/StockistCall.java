@@ -175,6 +175,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
     mStockistCall mstockistCall;
     StockistCallDB stockistCallDB;
     LocationDB locationDB;
+    String headTitle = "Stockist";
 
     public void onCreate(Bundle b) {
 
@@ -188,10 +189,6 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
         TextView tvCapName = (TextView) findViewById(R.id.tvCapName);
         TextView text_view_Regular = (TextView) findViewById(R.id.text_view_Regular);
 
-
-        hader_text.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Call");
-        tvCapName.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Name");
-        text_view_Regular.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Not Visited");
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -232,6 +229,13 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
         data1 = new ArrayList<String>();
         cbohelp = new CBO_DB_Helper(StockistCall.this);
         pob.setText("" + result);
+
+        //head change dynamic
+        headTitle = cbohelp.getMenu("DCR", "D_STK_CALL").get("D_STK_CALL").split(" ")[0];
+        hader_text.setText(headTitle + " Call");
+        tvCapName.setText(headTitle + " Name");
+        text_view_Regular.setText(headTitle + " Not Visited");
+
         batteryLevel = (TextView) findViewById(R.id.stk_battery_level);
         network_status = NetworkUtil.getConnectivityStatusString(getApplicationContext());
         setLocationToUI();
@@ -306,13 +310,13 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                 if (cbohelp.getmenu_count(table) > 0 && buttonView.isChecked()) {
                     //visited.setVisibility(View.GONE);
 //                    customVariablesAndMethod.msgBox(context, "Stockist already in the call-List");
-                    customVariablesAndMethod.msgBox(context, MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+" already in the call-List");
+                    customVariablesAndMethod.msgBox(context, headTitle + " already in the call-List");
                     buttonView.setChecked(false);
                 } else if (buttonView.isChecked()) {
 
                     AppAlert.getInstance().DecisionAlert(context, "ALERT !!!",
 //                            "Are you sure to save as\n\"No " + "Stockist" + " for the day",
-                            "Are you sure to save as\n\"No " + MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " for the day",
+                            "Are you sure to save as\n\"No " + headTitle + " for the day",
                             new AppAlert.OnClickListener() {
                                 @Override
                                 public void onPositiveClicked(View item, String result) {
@@ -375,6 +379,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                         b.putString("intent_fromRcpaCAll", "Chem");
                         b.putString("ID", stk_id);
                         b.putString("title", products.getText().toString());
+                        b.putString("head",headTitle);
                         b.putString("sample_name", sample_name);
                         b.putString("sample_pob", sample_pob);
                         b.putString("sample_sample", sample_sample);
@@ -474,13 +479,12 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
         //expense_list=new CBO_DB_Helper(context).getCallDetail("tempdr");
 
         summary_list = new LinkedHashMap<>();
-        summary_list.put("Stockist", stockist_list_summary);
+        summary_list.put(cbohelp.getMenu("DCR", "D_STK_CALL").get("D_STK_CALL").split(" ")[0], stockist_list_summary);
 
         final ArrayList<String> header_title = new ArrayList<>();
         //final List<Integer> visible_status=new ArrayList<>();
         for (String main_menu : summary_list.keySet()) {
             header_title.add(main_menu);
-//            header_title.add(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", ""));
             //visible_status.add(0);
         }
 
@@ -1027,7 +1031,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                             cbohelp.markAsCalled(CallType.STOKIST, true);
 
 //                            customVariablesAndMethod.msgBox(context, "Stockist Added Successfully");
-                            customVariablesAndMethod.msgBox(context, MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Added Successfully");
+                            customVariablesAndMethod.msgBox(context, headTitle + " Added Successfully");
                             pob.setText("");
                             Custom_Variables_And_Method.STOCKIST_NOT_VISITED = "Y";
 
@@ -1088,7 +1092,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                         AllGiftId, AllGiftQty, rate);
                 Log.e("stockist updated", "" + val);
 //                customVariablesAndMethod.msgBox(context, stkst_name + "  successfully updated");
-                customVariablesAndMethod.msgBox(context, MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + "  successfully updated");
+                customVariablesAndMethod.msgBox(context, headTitle + "  successfully updated");
 
                 new Service_Call_From_Multiple_Classes().SendFCMOnCall(context, mHandler, MESSAGE_INTERNET_SEND_FCM, "S", stk_id, "");
                /* Intent intent = new Intent(getApplicationContext(), LoginFake.class);
@@ -1140,7 +1144,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                         cbohelp.markAsCalled(CallType.STOKIST, true);
 
 //                        customVariablesAndMethod.msgBox(context, "Stockist Added Successfully");
-                        customVariablesAndMethod.msgBox(context, MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+" Added Successfully");
+                        customVariablesAndMethod.msgBox(context, headTitle + " Added Successfully");
                         pob.setText("");
                         Custom_Variables_And_Method.STOCKIST_NOT_VISITED = "Y";
 
@@ -1195,7 +1199,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
         spinImg.setEnabled(false);
         stk_name.setEnabled(false);
 //        new GPS_Timmer_Dialog(context, mHandler, "Scanning Stockist...", GPS_TIMMER).show();
-        new GPS_Timmer_Dialog(context, mHandler, "Scanning "+MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+"...", GPS_TIMMER).show();
+        new GPS_Timmer_Dialog(context, mHandler, "Scanning " + headTitle + "...", GPS_TIMMER).show();
     }
 
     private final Handler mHandler = new Handler() {
@@ -1296,7 +1300,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
         Custom_Variables_And_Method.GPS_STATE_CHANGED = true;
         Custom_Variables_And_Method.GPS_STATE_CHANGED_TIME = customVariablesAndMethod.get_currentTimeStamp();
 //        new GPS_Timmer_Dialog(context, mHandler, "Scanning Stockist...", GPS_TIMMER).show();
-        new GPS_Timmer_Dialog(context, mHandler, "Scanning "+MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+"...", GPS_TIMMER).show();
+        new GPS_Timmer_Dialog(context, mHandler, "Scanning " + headTitle + "...", GPS_TIMMER).show();
 
     }
 
@@ -1355,7 +1359,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                 stk_name.setClickable(false);
                 spinImg.setClickable(false);
                 stk_name.setText("Nothing Found");
-                customVariablesAndMethod.getAlert(context, MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+" not Found", "No  "+MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist")+" In Planed Dcr..");
+                customVariablesAndMethod.getAlert(context, headTitle + " not Found", "No  " + headTitle + " In Planed Dcr..");
 
             }
 
@@ -1521,7 +1525,7 @@ public class StockistCall extends AppCompatActivity implements ExpandableListAda
                         }
 
 //                        save.setText("Update Stockist");
-                        save.setText("Update "+MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist"));
+                        save.setText("Update " + headTitle);
                     } else {
 
                         remark.setText("");

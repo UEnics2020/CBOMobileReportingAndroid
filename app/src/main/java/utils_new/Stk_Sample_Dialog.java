@@ -107,7 +107,7 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
 
 
         TextView hader_text = (TextView) view.findViewById(R.id.hadder_text_1);
-        hader_text.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Sample");
+        hader_text.setText("Stockist Sample");
 
 
         customVariablesAndMethod = Custom_Variables_And_Method.getInstance();
@@ -141,6 +141,8 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
             sample_name_previous = Msg.getString("sample_name_previous");
             sample_pob_previous = Msg.getString("sample_pob_previous");
             sample_sample_previous = Msg.getString("sample_sample_previous");
+
+            hader_text.setText(Msg.getString("head") + " Sample");
         }
 
         getModelLocal();

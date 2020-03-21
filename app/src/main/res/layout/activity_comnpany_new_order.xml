@@ -30,6 +30,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/search"
                 android:id="@+id/filterTxt"
+                android:selectAllOnFocus="true"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
                 android:hint="Search Items/Products"

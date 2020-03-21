@@ -548,37 +548,10 @@ public class DcrmenuInGrid extends Fragment {
                             new IntentFilter(Const.INTENT_FILTER_LOCATION_UPDATE_AVAILABLE));
                 } else {
                     setLetLong(menuCodeOnClick);
-                    // }
-
-                    if (!MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", "").equals("")) {
-
-                        if (!MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("IS_CHECH_COUNT", "0").equalsIgnoreCase("0")) {
-                            startActivity(new Intent(getActivity(), FinalSubmitDcr_new.class));
-                            getActivity().overridePendingTransition(R.anim.fed_in, R.anim.fed_out);
-
-                        } else {
-                            AppAlert.getInstance().setNagativeTxt("No").setPositiveTxt("Yes").DecisionAlert(context, "Alert !!!", MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", ""), new AppAlert.OnClickListener() {
-                                @Override
-                                public void onPositiveClicked(View item, String result) {
-                                    startActivity(new Intent(getActivity(), FinalSubmitDcr_new.class));
-                                    getActivity().overridePendingTransition(R.anim.fed_in, R.anim.fed_out);
-                                }
-
-                                @Override
-                                public void onNegativeClicked(View item, String result) {
-
-                                }
-                            });
-
-
-                        }
-
-
-                        return;
-                    }
-
                     if (!customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "MISSED_CALL_OPTION", "N").equals("D") || checkForDoctorPOB()) {
-                        onClickFinalSubmit();
+                        showSuggessionBeforeFinalSubmit();
+
+                        //onClickFinalSubmit();
                     } else {
 
                         AppAlert.getInstance().Alert(context, "Pending!!!", "Call to some Planed Doctor",
@@ -1236,9 +1209,39 @@ public class DcrmenuInGrid extends Fragment {
         }
     }
 
+    private void showSuggessionBeforeFinalSubmit() {
+
+        if (getKeyList.contains("D_SALE") &&
+                !MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", "").isEmpty() &&
+                MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("IS_CHECH_COUNT", "0").equalsIgnoreCase("0")) {
+            AppAlert.getInstance()
+                    .setNagativeTxt("No")
+                    .setPositiveTxt("Yes")
+                    .DecisionAlert(context, "Alert !!!",
+                            MyCustumApplication.getInstance()
+                                    .getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG",
+                                            ""),
+                            new AppAlert.OnClickListener() {
+                                @Override
+                                public void onPositiveClicked(View item, String result) {
+                                    onClickFinalSubmit(false);
+                                }
+
+                                @Override
+                                public void onNegativeClicked(View item, String result) {
+
+                                }
+                            });
+
+        } else {
+            onClickFinalSubmit(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", "").isEmpty());
+        }
+        // onClickFinalSubmit();
+    }
+
     ///////////
     ///////////////////onClick FinalSubmit////////////
-    private void onClickFinalSubmit() {
+    private void onClickFinalSubmit(boolean isCheckForZeroCall) {
 
 
         v.startAnimation(anim);
@@ -1281,7 +1284,7 @@ public class DcrmenuInGrid extends Fragment {
 
             if (DCR_ID.equals("0") || customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "dcr_date_real").equals("")) {
                 customVariablesAndMethod.msgBox(context, "Please open your DCR Days first.....");
-            } else if (drInLocal.size() <= 0 && (cboDbHelper.getCountphdairy_dcr("D") == 0 && (cboDbHelper.getCountphdairy_dcr("P") == 0) &&
+            } else if (isCheckForZeroCall && drInLocal.size() <= 0 && (cboDbHelper.getCountphdairy_dcr("D") == 0 && (cboDbHelper.getCountphdairy_dcr("P") == 0) &&
                     (chemist_status == 0) && (!customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "CHEMIST_NOT_VISITED").equals("Y")) &&
                     (stockist_status == 0) && (!customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "STOCKIST_NOT_VISITED").equals("Y")))) {
 
@@ -1419,7 +1422,7 @@ public class DcrmenuInGrid extends Fragment {
                     try {
 
                         //result4FinalSubmit();
-                        PreFinalSubmit();
+                        PreFinalSubmit(isCheckForZeroCall);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1490,12 +1493,12 @@ public class DcrmenuInGrid extends Fragment {
 
     }
 
-    public void PreFinalSubmit() {
+    public void PreFinalSubmit(boolean isCheckForZeroCall) {
 
         IfRetailerConditionFulfiled(new Response() {
             @Override
             public void onSuccess(Bundle bundle) {
-                IfDrConditionFulfiled(new Response() {
+                IfDrConditionFulfiled(isCheckForZeroCall, new Response() {
                     @Override
                     public void onSuccess(Bundle bundle) {
                         IfDr_Signature_ConditionFullfilled(new Response() {
@@ -1763,7 +1766,7 @@ public class DcrmenuInGrid extends Fragment {
 
     //// check the condition for all the menus in dcr
 
-    private void IfDrConditionFulfiled(Response listener) {
+    private void IfDrConditionFulfiled(boolean isCheckForZeroCall, Response listener) {
 
         String Hide_status = Constants.getSIDE_STATUS(getActivity());
 
@@ -1781,10 +1784,10 @@ public class DcrmenuInGrid extends Fragment {
         // new concept of working type is if any validation for final submit is to be skiped for a menu then
         //workingcode = NR
         //
-        if (((drInLocal.size() <= 0 &&
+        if (((drInLocal.size() <= 0 && isCheckForZeroCall &&
                 !customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "working_code", "W").equals("CSC")) && !MyCustumApplication.getInstance().IsSubmitDCR_WithoutCalls()) &&
-                (cboDbHelper.getmenu_count("chemisttemp") == 0 && (cboDbHelper.getmenu_count("phdcrstk") == 0))
-                && (cboDbHelper.getCountphdairy_dcr("D") == 0 && (cboDbHelper.getCountphdairy_dcr("P") == 0))) {
+                (cboDbHelper.getmenu_count("chemisttemp") == 0 && (cboDbHelper.getmenu_count("phdcrstk") == 0)) &&
+                (cboDbHelper.getCountphdairy_dcr("D") == 0 && (cboDbHelper.getCountphdairy_dcr("P") == 0))) {
             if (listener != null) {
                 listener.onError("No Calls found !!!", "Please make atleast One Call....");
             }
@@ -1954,8 +1957,9 @@ public class DcrmenuInGrid extends Fragment {
         if ((stockist_count == 0) && !MyCustumApplication.getInstance().IsSubmitDCR_WithoutCalls() &&
                 (!customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "STOCKIST_NOT_VISITED").equals("Y") &&
                         !customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "STOCKIST_NOT_REQUIRED").equals("Y"))) {
+            String headTitle = cboDbHelper.getMenu("DCR", "D_STK_CALL").get("D_STK_CALL").split(" ")[0];
             if (listener != null) {
-                listener.onError("No Stockist Called !!!!", "Please Select Not Visited In Stockist Call");
+                listener.onError("No " + headTitle + " Called !!!!", "Please Select Not Visited In " + headTitle + " Call");
             }
         } else {
             if (listener != null) {
@@ -3004,6 +3008,7 @@ public class DcrmenuInGrid extends Fragment {
         }
 
     }
+
 
 }
 

@@ -103,7 +103,9 @@ public class DcrNewAdapter extends RecyclerView.Adapter<DcrNewAdapter.MyviewHold
         if(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"CHEMIST_NOT_REQUIRED","Y").equals("N")) {
             holder.totalChem_text.setText("Total " + cbohelp.getMenu("DCR", "D_CHEMCALL").get("D_CHEMCALL").split(" ")[0] + " :");
         }
-
+        if(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"STOCKIST_NOT_REQUIRED","Y").equals("N")) {
+            holder.totalChem_text.setText("Total " + cbohelp.getMenu("DCR", "D_STK_CALL").get("D_STK_CALL").split(" ")[0] + " :");
+        }
 
         holder.totalTenivia_text.setText(rptmodel.getRxCaps());
 

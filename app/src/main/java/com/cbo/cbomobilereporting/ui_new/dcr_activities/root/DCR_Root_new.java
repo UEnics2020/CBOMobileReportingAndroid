@@ -1419,7 +1419,11 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
                         customVariablesAndMethod.msgBox(context, "Please Select " + MyCustumApplication.getInstance().getDCR().getAreaTitle() + " First .....");
                     } else {
                         getWorkWithIDs();
-                        submitforMeeting();
+                        if (work_type_code.startsWith("WW")) {
+                            submitWorking();
+                        } else {
+                            submitforMeeting();
+                        }
                     }
                 } else {
                     if (getRoute().equals("")) {
@@ -1430,7 +1434,11 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
                         customVariablesAndMethod.msgBox(context, "Please Select " + MyCustumApplication.getInstance().getDCR().getAreaTitle() + " First .....");
                     } else {
                         getWorkWithIDs();
-                        submitforMeeting();
+                        if (work_type_code.startsWith("WW")) {
+                            submitWorking();
+                        } else {
+                            submitforMeeting();
+                        }
                     }
                 }
 
@@ -1710,6 +1718,7 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
         } else {
             work_with_title.setText(MyCustumApplication.getInstance().getDCR().getWorkWithTitle());
         }
+        DIVERTWWYN_TXT.setText("Divert "+ MyCustumApplication.getInstance().getDCR().getWorkWithTitle());
 
         if (MyCustumApplication.getInstance().getDCR().getShowRouteAsPerTP().equalsIgnoreCase("Y")
                 && !ROUTEDIVERTYN.isChecked() && (work_type_TPYN.isEmpty()
@@ -1720,6 +1729,7 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
             Route_Title.setText(MyCustumApplication.getInstance().getDCR().getRouteTitle());
         }
 
+        ROUTEDIVERTYN_TXT.setText("Divert "+ MyCustumApplication.getInstance().getDCR().getRouteTitle());
         if (MyCustumApplication.getInstance().getDCR().getAdditionalAreaApprovalReqd().equalsIgnoreCase("Y")) {
             //get_area.setEnabled(false);
             Area_title.setText(MyCustumApplication.getInstance().getDCR().getAreaTitle() + "(Approval Required)");

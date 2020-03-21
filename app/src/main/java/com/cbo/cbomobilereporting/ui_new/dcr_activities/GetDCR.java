@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cbo.cbomobilereporting.MyCustumApplication;
 import com.cbo.cbomobilereporting.R;
 import com.cbo.cbomobilereporting.databaseHelper.CBO_DB_Helper;
 import com.cbo.cbomobilereporting.ui_new.dcr_activities.area.Dcr_Open_New;
@@ -53,7 +54,10 @@ public class GetDCR extends AppCompatActivity {
     ArrayList<String> res = new ArrayList<String>();
     Context context;
 
-    private  static final int MESSAGE_INTERNET_DCRCOMMIT_DOWNLOADALL=1;
+    private static final int MESSAGE_INTERNET_DCRCOMMIT_DOWNLOADALL = 1;
+    private TextView ROUTE_TITLE;
+    private TextView AREA_TITLE;
+    private TextView WORK_WITH;
 
 
     public ArrayList<String> getData(String id) {
@@ -62,7 +66,7 @@ public class GetDCR extends AppCompatActivity {
 
             String responseGetDcr = myServiceHandler.getResponse_getDcr(cbo_helper.getCompanyCode(), "" + Custom_Variables_And_Method.DCR_ID);
 
-            if(!responseGetDcr.equals("ERROR")) {
+            if (!responseGetDcr.equals("ERROR")) {
                 JSONObject jsonObject = new JSONObject(responseGetDcr);
                 JSONArray jsonArray = jsonObject.getJSONArray("Tables0");
                 JSONObject jsonObject1 = jsonArray.getJSONObject(0);
@@ -85,12 +89,12 @@ public class GetDCR extends AppCompatActivity {
 
     public void setData() {
         if (res.size() == 0) {
-            customVariablesAndMethod.msgBox(context,"DCR Details can not be seen...." + "\n" + "please Replan.....");
+            customVariablesAndMethod.msgBox(context, "DCR Details can not be seen...." + "\n" + "please Replan.....");
 
         } else {
             dcr_date.setText(res.get(0));
             area.setText(res.get(1));
-            work_with.setText(res.get(2) + "\n" + res.get(3) + "\n" + res.get(4));
+            work_with.setText((res.get(2) + "\n" + res.get(3) + "\n" + res.get(4)).trim());
             route.setText("" + res.get(8));
 
 
@@ -116,23 +120,29 @@ public class GetDCR extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_hadder_2016);
         }
 
-        context=this;
+        context = this;
 
         dcr_date = (TextView) findViewById(R.id.dcr_date_id);
         area = (TextView) findViewById(R.id.dcr_area_id);
         route = (TextView) findViewById(R.id.dcr_route_getDcr);
         work_with = (TextView) findViewById(R.id.dcr_work_id);
+        ROUTE_TITLE = (TextView) findViewById(R.id.ROUTE_TITLE);
+        AREA_TITLE = (TextView) findViewById(R.id.AREA_TITLE);
+        WORK_WITH = (TextView) findViewById(R.id.WORK_WITH);
         back = (Button) findViewById(R.id.dcr_stsbk);
         ref = (ImageView) findViewById(R.id.ref_header);
         Dcr_day_update = (Button) findViewById(R.id.Dcr_day_update);
-        customVariablesAndMethod=Custom_Variables_And_Method.getInstance();
+        customVariablesAndMethod = Custom_Variables_And_Method.getInstance();
         PA_ID = Custom_Variables_And_Method.PA_ID;
         myServiceHandler = new ServiceHandler(context);
         cbo_helper = new CBO_DB_Helper(context);
         my_network = NetworkUtil.getConnectivityStatusString(context);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.route_layout);
-        routeYN = customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"root_needed");
+        routeYN = customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "root_needed");
 
+        ROUTE_TITLE.setText(MyCustumApplication.getInstance().getDCR().getRouteTitle());
+        AREA_TITLE.setText(MyCustumApplication.getInstance().getDCR().getAreaTitle());
+        WORK_WITH.setText(MyCustumApplication.getInstance().getDCR().getWorkWithTitle());
         if (!routeYN.equalsIgnoreCase("Y")) {
             linearLayout.setVisibility(View.GONE);
         }
@@ -152,18 +162,18 @@ public class GetDCR extends AppCompatActivity {
                 if (my_network.equals("Not connected to Internet")) {
                     customVariablesAndMethod.Connect_to_Internet_Msg(context);
                 } else {
-                    customVariablesAndMethod.setDataInTo_FMCG_PREFRENCE(context,"DcrPlantimestamp", customVariablesAndMethod.get_currentTimeStamp());
-                    customVariablesAndMethod.setDataInTo_FMCG_PREFRENCE(context,"LastCallTime", customVariablesAndMethod.get_currentTimeStamp());
-                   // new Service_Call_From_Multiple_Classes().DownloadAll(context,hh,MESSAGE_INTERNET_DCRCOMMIT_DOWNLOADALL);
+                    customVariablesAndMethod.setDataInTo_FMCG_PREFRENCE(context, "DcrPlantimestamp", customVariablesAndMethod.get_currentTimeStamp());
+                    customVariablesAndMethod.setDataInTo_FMCG_PREFRENCE(context, "LastCallTime", customVariablesAndMethod.get_currentTimeStamp());
+                    // new Service_Call_From_Multiple_Classes().DownloadAll(context,hh,MESSAGE_INTERNET_DCRCOMMIT_DOWNLOADALL);
                     new Service_Call_From_Multiple_Classes().DownloadAll(context, new Response() {
                         @Override
                         public void onSuccess(Bundle bundle) {
-                            customVariablesAndMethod.msgBox(context,"Data Up-dated Sucessfully...");
+                            customVariablesAndMethod.msgBox(context, "Data Up-dated Sucessfully...");
                         }
 
                         @Override
                         public void onError(String s, String s1) {
-                            AppAlert.getInstance().getAlert(context,s,s1);
+                            AppAlert.getInstance().getAlert(context, s, s1);
                         }
                     });
                     //new getDoctor_Chemist().execute();
@@ -238,13 +248,13 @@ public class GetDCR extends AppCompatActivity {
                 case MESSAGE_INTERNET_DCRCOMMIT_DOWNLOADALL:
 
                     if ((null != msg.getData())) {
-                        customVariablesAndMethod.msgBox(context,"Data Up-dated Sucessfully...");
+                        customVariablesAndMethod.msgBox(context, "Data Up-dated Sucessfully...");
                     }
                     break;
                 case 99:
 
                     if ((null != msg.getData())) {
-                        customVariablesAndMethod.msgBox(context,msg.getData().getString("Error"));
+                        customVariablesAndMethod.msgBox(context, msg.getData().getString("Error"));
                     }
                     break;
                 default:
@@ -254,28 +264,28 @@ public class GetDCR extends AppCompatActivity {
         }
     };
 
-    private Boolean checkforCalls(){
-        int result=0;
-        result+=cbo_helper.getmenu_count("phdcrdr_rc");
-        result+=cbo_helper.getmenu_count("tempdr");
-        result+=cbo_helper.getmenu_count("chemisttemp");
+    private Boolean checkforCalls() {
+        int result = 0;
+        result += cbo_helper.getmenu_count("phdcrdr_rc");
+        result += cbo_helper.getmenu_count("tempdr");
+        result += cbo_helper.getmenu_count("chemisttemp");
         //result+=cbo_helper.getmenu_count("phdcrstk");
-        if (result==0){
+        if (result == 0) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    private void openForReplan(){
-        if ( customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"root_needed","Y").equalsIgnoreCase("Y")) {
-            Intent intent=new Intent(context, DCR_Root_new.class);
-            intent.putExtra("plan_type","r");
+    private void openForReplan() {
+        if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "root_needed", "Y").equalsIgnoreCase("Y")) {
+            Intent intent = new Intent(context, DCR_Root_new.class);
+            intent.putExtra("plan_type", "r");
             startActivity(intent);
             finish();
         } else {
-            Intent intent=new Intent(context, Dcr_Open_New.class);
-            intent.putExtra("plan_type","r");
+            Intent intent = new Intent(context, Dcr_Open_New.class);
+            intent.putExtra("plan_type", "r");
             startActivity(intent);
             finish();
         }
@@ -315,8 +325,6 @@ public class GetDCR extends AppCompatActivity {
 
         }
     }
-
-
 
 
     @Override

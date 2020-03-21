@@ -50,6 +50,7 @@ public class FNewPhyStock extends Fragment implements IFBillNewOrder {
     TextView RateTxt, AmtTxt, schemeTxt, batchTxt, packTxt, stockTxt, discAmtTxt, MRPTxt;
     private vmBillitem viewModel;
     private Boolean freeQtyNA = false;
+    private String filterStr = "";
 
     public Boolean getFreeQtyNA() {
         return freeQtyNA;
@@ -74,6 +75,7 @@ public class FNewPhyStock extends Fragment implements IFBillNewOrder {
 
                     mBillItem item = (mBillItem) data.getSerializableExtra("item");
                     //setItem(item);
+                    filterStr = data.getStringExtra("filterText");
                     selectBatch(item, true);
                     break;
                 default:
@@ -128,9 +130,15 @@ public class FNewPhyStock extends Fragment implements IFBillNewOrder {
                 if (context instanceof ICompanyCart) {
                     viewModel.setOrder(((ICompanyCart) context).getOrder());
                 }
+//                Intent intent = new Intent(context, CompanyItemFilter.class);
+//                intent.putExtra("order", viewModel.getOrder());
+//                intent.putExtra("syncItem", false);//!viewModel.isLoaded());
+//                startActivityForResult(intent, NEW_ORDER_ITEM_FILTER);
+
                 Intent intent = new Intent(context, CompanyItemFilter.class);
                 intent.putExtra("order", viewModel.getOrder());
                 intent.putExtra("syncItem", false);//!viewModel.isLoaded());
+                intent.putExtra("filterText", filterStr);//!viewModel.isLoaded());
                 startActivityForResult(intent, NEW_ORDER_ITEM_FILTER);
             }
         });
@@ -381,7 +389,7 @@ public class FNewPhyStock extends Fragment implements IFBillNewOrder {
             item.setStock(item.getQty() + item.getFreeQty());
             viewModel.updateStock(item);
         } else {
-            if (item.getQty()== 0){
+            if (item.getQty() == 0) {
                 item.setQty(item.getStock());
             }
             viewModel.setItem(item);

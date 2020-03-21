@@ -32,6 +32,7 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
     private aCompanyItemFilter itemAdapter;
     private vmBill_ItemFilter viewModel;
     TextView itemincart;
+    String filterTxtStr = "";
     private ArrayList<mBillItem> Billlist = new ArrayList<mBillItem>();
     private EditText filterTxt;
 
@@ -55,6 +56,7 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
 
         itemincart = findViewById(R.id.itemincart);
 
+        filterTxtStr = getIntent().getStringExtra("filterText") != null ? getIntent().getStringExtra("filterText") : "";
         ImageView clearQry = findViewById(R.id.clearQry);
         itemlist_filter = (RecyclerView) findViewById(R.id.itemList);
         itemAdapter = new aCompanyItemFilter(this, Billlist);
@@ -67,12 +69,17 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
             public void OnItemSelected(mBillItem item) {
                 Intent intent = new Intent();
                 intent.putExtra("item", item);
+                intent.putExtra("filterText", filterTxtStr);
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
 
         filterTxt = toolbar.findViewById(R.id.filterTxt);
+
+        filterTxt.setText(filterTxtStr);
+        filterTxt.selectAll();
+
         filterTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,6 +88,8 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                filterTxtStr = s.toString();
                 viewModel.setFilterQry(s.toString());
                 viewModel.getOrderItem(context, false);
 
@@ -102,6 +111,7 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
 
         LinearLayout goToCart = findViewById(R.id.go_to_cart);
         goToCart.setOnClickListener(view -> onBackPressed());
+        filterTxt.requestFocus();
 
     }
 
@@ -158,10 +168,5 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
         finish();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        filterTxt.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("KEY_FILTER", ""));
-    }
 }
 
