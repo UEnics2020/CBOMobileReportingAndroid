@@ -81,6 +81,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
+import bill.BillReport.BillActivity;
+import bill.openingStock.OpeningStockActivity;
+import bill.openingStock.mPage;
 import locationpkg.Const;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -240,6 +243,7 @@ public class DcrmenuInGrid extends Fragment {
 
 
     private void OnGridItemClick(String menuCodeOnClick, String menuNameOnClickGlobal, boolean SkipLocationVarification) {
+
         switch (menuCodeOnClick) {
             case "D_LOC_TEST": {
                 Intent i = new Intent(getActivity(), CentroidLocation.class);
@@ -470,6 +474,47 @@ public class DcrmenuInGrid extends Fragment {
                 }
                 break;
             }
+
+            //new Menu code priyesh
+
+            case "D_SALE": {
+
+                if (DCR_ID.equals("0") || customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "dcr_date_real").equals("")) {
+                    customVariablesAndMethod.msgBox(context, "Please open your DCR Days first....");
+                } else {
+                    if (!networkUtil.internetConneted(context)) {
+                        customVariablesAndMethod.Connect_to_Internet_Msg(context);
+                    } else {
+                        Intent complaintView = new Intent(context, BillActivity.class);
+                        complaintView.putExtra("title", "Make Sale");
+                        startActivity(complaintView);
+                    }
+
+                }
+                break;
+            }
+            case "D_PHYSTOCK": {
+                if (DCR_ID.equals("0") || customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "dcr_date_real").equals("")) {
+                    customVariablesAndMethod.msgBox(context, "Please open your DCR Days first....");
+
+                } else {
+                    if (!networkUtil.internetConneted(context)) {
+
+                        customVariablesAndMethod.Connect_to_Internet_Msg(context);
+
+                    } else {
+                        Intent complaintView = new Intent(context, OpeningStockActivity.class);
+                        complaintView.putExtra("page", new mPage("Physical Stock", OpeningStockActivity.DOC_TYPE.PHYSICAL_STOCK.name())
+                                .setOnLoadApi("PHY_GRID_MOBILE")
+                                .setOnDetailApi("PHY_POPULATE_MOBILE")
+                                .setOnDeleteApi("PHY_DELETE_MOBILE")
+                                .setOnFinalizeApi("PHY_COMMIT_MOBILE"));
+                        startActivity(complaintView);
+                    }
+                }
+                break;
+            }
+
             case "D_EXP": {
                 if (DCR_ID.equals("0") || customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "dcr_date_real").equals("")) {
                     customVariablesAndMethod.msgBox(context, "Please open your DCR Days first....");
@@ -485,9 +530,7 @@ public class DcrmenuInGrid extends Fragment {
             }
 
             case "D_SUM": {
-
                 onClickSummary();
-
                 break;
             }
             case "D_OUTTIME": {
@@ -495,6 +538,7 @@ public class DcrmenuInGrid extends Fragment {
                 onClickFinalSubmitCheckOut();
                 break;
             }
+
             case "D_FINAL": {
                 if (DCR_ID.equals("0") || customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "dcr_date_real").equals("")) {
                     customVariablesAndMethod.msgBox(context, "Please open your DCR Days first....");
@@ -505,6 +549,34 @@ public class DcrmenuInGrid extends Fragment {
                 } else {
                     setLetLong(menuCodeOnClick);
                     // }
+
+                    if (!MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", "").equals("")) {
+
+                        if (!MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("IS_CHECH_COUNT", "0").equalsIgnoreCase("0")) {
+                            startActivity(new Intent(getActivity(), FinalSubmitDcr_new.class));
+                            getActivity().overridePendingTransition(R.anim.fed_in, R.anim.fed_out);
+
+                        } else {
+                            AppAlert.getInstance().setNagativeTxt("No").setPositiveTxt("Yes").DecisionAlert(context, "Alert !!!", MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DAYPLAN_CLICK_MSG", ""), new AppAlert.OnClickListener() {
+                                @Override
+                                public void onPositiveClicked(View item, String result) {
+                                    startActivity(new Intent(getActivity(), FinalSubmitDcr_new.class));
+                                    getActivity().overridePendingTransition(R.anim.fed_in, R.anim.fed_out);
+                                }
+
+                                @Override
+                                public void onNegativeClicked(View item, String result) {
+
+                                }
+                            });
+
+
+                        }
+
+
+                        return;
+                    }
+
                     if (!customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "MISSED_CALL_OPTION", "N").equals("D") || checkForDoctorPOB()) {
                         onClickFinalSubmit();
                     } else {
@@ -693,7 +765,6 @@ public class DcrmenuInGrid extends Fragment {
         //End of call to service
     }
 
-
     private void parser_dcr_plan(Bundle result, String nameOnClick) throws JSONException {
 
         if (result != null) {
@@ -714,7 +785,6 @@ public class DcrmenuInGrid extends Fragment {
                                 public void onPositiveClicked(View item, String result1) {
                                     try {
                                         if (!jsonArray0.getJSONObject(0).getString("URL").equalsIgnoreCase("")) {
-
                                             MyCustumApplication.getInstance().LoadURL(jsonArray0.getJSONObject(0).getString("TITLE"), jsonArray0.getJSONObject(0).getString("URL"));
                                         } else {
                                             openDCR(result, nameOnClick);

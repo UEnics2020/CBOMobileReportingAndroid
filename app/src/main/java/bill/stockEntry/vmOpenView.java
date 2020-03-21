@@ -44,7 +44,7 @@ public class vmOpenView extends CBOViewModel<IOpen> {
     private mBillOrder order;
 
     private BillBatchDB billBatchDB;
-    private BillItemDB billDB ;
+    private BillItemDB billDB;
 
     @Override
     public void onUpdateView(AppCompatActivity context, IOpen view) {
@@ -58,18 +58,16 @@ public class vmOpenView extends CBOViewModel<IOpen> {
 
     }
 
-    public mBillOrder getOrder(){
+    public mBillOrder getOrder() {
         return order;
     }
-    public void setOrder(mBillOrder order){
+
+    public void setOrder(mBillOrder order) {
         this.order = order;
     }
 
 
-
-    public void getOrderItem(final AppCompatActivity context, Boolean SyncYN){
-
-
+    public void getOrderItem(final AppCompatActivity context, Boolean SyncYN) {
 
 
         if (SyncYN) {
@@ -80,7 +78,7 @@ public class vmOpenView extends CBOViewModel<IOpen> {
             request.put("iPA_ID", view.getUserId());
             request.put("iCOMPANY_ID", getOrder().getPartyId());
             try {
-                request.put("DOC_DATE", CustomDatePicker.formatDate(CustomDatePicker.getDate(order.getDocDate(),CustomDatePicker.ShowFormatOld) ,CustomDatePicker.CommitFormat));
+                request.put("DOC_DATE", CustomDatePicker.formatDate(CustomDatePicker.getDate(order.getDocDate(), CustomDatePicker.ShowFormatOld), CustomDatePicker.CommitFormat));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -106,10 +104,9 @@ public class vmOpenView extends CBOViewModel<IOpen> {
 
                         @Override
                         public void onError(String s, String s1) {
-                            AppAlert.getInstance().getAlert(context,s,s1);
+                            AppAlert.getInstance().getAlert(context, s, s1);
                         }
                     }));
-
 
 
             //End of call to service
@@ -120,7 +117,7 @@ public class vmOpenView extends CBOViewModel<IOpen> {
 
 
     public void parser1(Bundle result) throws JSONException {
-        if (result!=null ) {
+        if (result != null) {
             String table0 = result.getString("Tables0");
             JSONArray jsonArray = new JSONArray(table0);
 
@@ -135,7 +132,10 @@ public class vmOpenView extends CBOViewModel<IOpen> {
                 mBillItem item = new mBillItem()
                         .setId(jsonObject2.getString("ITEM_ID"))
                         .setName(jsonObject2.getString("ITEM_NAME"))
-                        .setStock(jsonObject2.getDouble("STOCK_QTY"));
+                        .setStock(jsonObject2.getDouble("STOCK_QTY"))
+                        .setBRAND(jsonObject2.getString("BRAND"))
+                        .setSUB_CATEGORY(jsonObject2.getString("SUB_CATEGORY"))
+                        .setCATEGORY(jsonObject2.getString("CATEGORY"));
 
 
                 mTax GST = new mTax(eTax.getTax(jsonObject2.getInt("GST_TYPE")));
@@ -148,7 +148,8 @@ public class vmOpenView extends CBOViewModel<IOpen> {
 
             }
 
-            billDB.insert(items);
+//            billDB.insert(items);
+            billDB.insertNew(items);
 
             String table1 = result.getString("Tables1");
             jsonArray = new JSONArray(table1);
@@ -159,9 +160,8 @@ public class vmOpenView extends CBOViewModel<IOpen> {
 
             //Gson gson = new Gson();
 
-           // Type type = new TypeToken<ArrayList<mBillBatch>>() {}.getType();
+            // Type type = new TypeToken<ArrayList<mBillBatch>>() {}.getType();
             //ArrayList<mBillBatch> batches = (ArrayList<mBillBatch>) gson.fromJson(table1, type);
-
 
 
             ArrayList<mBillBatch> batches = new ArrayList<>();
@@ -180,7 +180,7 @@ public class vmOpenView extends CBOViewModel<IOpen> {
                         .setSTOCK(jsonObject2.getDouble("STOCK_QTY"));
 
                 mDeal deal = new mDeal();
-                deal.setType(eDeal.get(jsonObject2.getString("DEAL_TYPE") ))
+                deal.setType(eDeal.get(jsonObject2.getString("DEAL_TYPE")))
                         .setFreeQty(jsonObject2.getDouble("DEAL_QTY"))
                         .setQty(jsonObject2.getDouble("DEAL_ON"));
                 item_batch.setDeal(deal);

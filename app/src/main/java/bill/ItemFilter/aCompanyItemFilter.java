@@ -31,21 +31,23 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     private IitemFilter listener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, stock,character;
+        public TextView name, stock, character, tvBrand, tvSubCategory, tvCategory;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             stock = (TextView) view.findViewById(R.id.stock);
+            tvBrand = (TextView) view.findViewById(R.id.tvBrand);
+            tvCategory = (TextView) view.findViewById(R.id.tvCategory);
+            tvSubCategory = (TextView) view.findViewById(R.id.tvSubCategory);
             character = view.findViewById(R.id.character);
         }
     }
 
 
-    public void setListener(IitemFilter listener){
+    public void setListener(IitemFilter listener) {
         this.listener = listener;
     }
-
 
 
     public aCompanyItemFilter(Context mContext, ArrayList<mBillItem> items) {
@@ -55,7 +57,7 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     }
 
 
-    public ArrayList<mBillItem> getItems(){
+    public ArrayList<mBillItem> getItems() {
         return items;
     }
 
@@ -71,7 +73,6 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bill_item_card, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -79,10 +80,13 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         mBillItem item = itemscopy.get(position);
         holder.name.setText(item.getName());
-        holder.stock.setText(""+item.getStock());
+        holder.stock.setText("" + item.getStock());
+        holder.tvBrand.setText(": "+item.getBRAND());
+        holder.tvCategory.setText(": "+item.getCATEGORY());
+        holder.tvSubCategory.setText(": "+item.getSUB_CATEGORY());
 
-        if (item != null && item.getName().length()>0)
-            holder.character.setText(item.getName().substring(0,1).toUpperCase());
+        if (item != null && item.getName().length() > 0)
+            holder.character.setText(item.getName().substring(0, 1).toUpperCase());
 
         final Drawable drawable = holder.character.getBackground();
         Random rnd = new Random();
@@ -93,7 +97,7 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (listener!= null){
+                        if (listener != null) {
                             listener.OnItemSelected(item);
                         }
                     }
@@ -101,13 +105,12 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     }
 
 
-
     @Override
     public int getItemCount() {
         return itemscopy.size();
     }
 
-    public void filter(String Qry){
+    public void filter(String Qry) {
         int textlength = Qry.length();
         itemscopy.clear();
         for (int i = 0; i < items.size(); i++) {
@@ -124,8 +127,7 @@ public class aCompanyItemFilter extends RecyclerView.Adapter<aCompanyItemFilter.
     }
 
 
-
-    interface IitemFilter{
+    interface IitemFilter {
         void OnItemSelected(mBillItem item);
     }
 }

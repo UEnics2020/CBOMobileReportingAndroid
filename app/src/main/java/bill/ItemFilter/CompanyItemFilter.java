@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +32,9 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
     private aCompanyItemFilter itemAdapter;
     private vmBill_ItemFilter viewModel;
     TextView itemincart;
-    private  ArrayList<mBillItem>Billlist= new ArrayList<mBillItem>();
+    private ArrayList<mBillItem> Billlist = new ArrayList<mBillItem>();
+    private EditText filterTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +42,15 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
 
         viewModel = ViewModelProviders.of(this).get(vmBill_ItemFilter.class);
         viewModel.setOrder((mBillOrder) getIntent().getSerializableExtra("order"));
-        viewModel.setSync(getIntent().getBooleanExtra("syncItem",true));
+        viewModel.setSync(getIntent().getBooleanExtra("syncItem", true));
 
-        viewModel.setView(context,this);
+        viewModel.setView(context, this);
     }
-
 
 
     @Override
     public void getReferencesById() {
-        toolbar =  findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         itemincart = findViewById(R.id.itemincart);
@@ -64,13 +66,13 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
             @Override
             public void OnItemSelected(mBillItem item) {
                 Intent intent = new Intent();
-                intent.putExtra("item",item);
+                intent.putExtra("item", item);
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
 
-        TextView filterTxt = toolbar.findViewById(R.id.filterTxt);
+        filterTxt = toolbar.findViewById(R.id.filterTxt);
         filterTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -80,9 +82,9 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 viewModel.setFilterQry(s.toString());
-                viewModel.getOrderItem(context,false);
+                viewModel.getOrderItem(context, false);
 
-               // itemAdapter  .filter(s.toString());
+                // itemAdapter  .filter(s.toString());
             }
 
             @Override
@@ -129,7 +131,7 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
     @Override
     public void setTile(String title) {
 
-        if (getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_black);
             toolbar.setNavigationOnClickListener(view -> onBackPressed());
@@ -156,6 +158,10 @@ public class CompanyItemFilter extends CustomActivity implements IitemNewOrder {
         finish();
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        filterTxt.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("KEY_FILTER", ""));
+    }
 }
 

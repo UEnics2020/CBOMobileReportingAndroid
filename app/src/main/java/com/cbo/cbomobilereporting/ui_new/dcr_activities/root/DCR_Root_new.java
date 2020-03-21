@@ -458,14 +458,20 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
         }
 
 
-        if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "IsBackDate", "0").equals("1")) {
+        if (MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("LATEREMARK_YN", "Y").equalsIgnoreCase("N")) {
             late_remark.setText("");
             late_remark.setVisibility(View.GONE);
             lay_late_remark.setVisibility(View.GONE);
         } else {
-            late_remark.setVisibility(View.VISIBLE);
-            lay_late_remark.setVisibility(View.VISIBLE);
-            late_remark.setText(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "BackDateReason", ""));
+            if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "IsBackDate", "0").equals("1")) {
+                late_remark.setText("");
+                late_remark.setVisibility(View.GONE);
+                lay_late_remark.setVisibility(View.GONE);
+            } else {
+                late_remark.setVisibility(View.VISIBLE);
+                lay_late_remark.setVisibility(View.VISIBLE);
+                late_remark.setText(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "BackDateReason", ""));
+            }
         }
 
         work_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1381,7 +1387,6 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
                 } else if (getArea().trim().isEmpty() && MyCustumApplication.getInstance().getDCR().getAdditionalAreaValidationReqd().equalsIgnoreCase("Y")) {
                     customVariablesAndMethod.msgBox(context, "Please Select " + MyCustumApplication.getInstance().getDCR().getAreaTitle() + " First .....");
                 } else {
-
                     submitWorking();
 
                 }
@@ -2029,6 +2034,7 @@ public class DCR_Root_new extends AppCompatActivity implements up_down_ftp.Adapt
         cboProgressDialog.dismiss();
         AppAlert.getInstance().getAlert(context, message, description);
     }
+
 }
 
 

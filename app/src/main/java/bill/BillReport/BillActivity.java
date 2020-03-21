@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.cbo.cbomobilereporting.MyCustumApplication;
 import com.cbo.cbomobilereporting.R;
 import com.cbo.cbomobilereporting.ui_new.CustomActivity;
 import com.google.android.material.appbar.AppBarLayout;
@@ -37,21 +38,20 @@ import bill.openingStock.OpeningStockActivity;
 import utils_new.AppAlert;
 import utils_new.CustomDatePicker;
 
-public class BillActivity     extends CustomActivity implements
-        IBill, aBill.Bill_interface,iBillMain, SearchView.OnQueryTextListener {
-private  vmBill vmBill;
-private Toolbar toolbar;
-private TextView textView,Totamt;
-private AppBarLayout appBarLayout;
-private RecyclerView  billrecyclerView;
-private aBill billadapter;
-private FloatingActionButton fab;
-private FBillFilter fBillFilter;
-private CardView addBill;
-private SwipeRefreshLayout swipeRefressLayoutRecycler;
-public  CollapsingToolbarLayout collapsingToolbarLayout;
-private  Menu menu;
-
+public class BillActivity extends CustomActivity implements
+        IBill, aBill.Bill_interface, iBillMain, SearchView.OnQueryTextListener {
+    private vmBill vmBill;
+    private Toolbar toolbar;
+    private TextView textView, Totamt;
+    private AppBarLayout appBarLayout;
+    private RecyclerView billrecyclerView;
+    private aBill billadapter;
+    private FloatingActionButton fab;
+    private FBillFilter fBillFilter;
+    private CardView addBill;
+    private SwipeRefreshLayout swipeRefressLayoutRecycler;
+    public CollapsingToolbarLayout collapsingToolbarLayout;
+    private Menu menu;
 
 
     @Override
@@ -67,16 +67,16 @@ private  Menu menu;
     @Override
     protected void onStart() {
         super.onStart();
-        vmBill.setView(context,this);
+        vmBill.setView(context, this);
     }
 
     @Override
     public void getReferencesById() {
         context = this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        appBarLayout=(AppBarLayout)findViewById(R.id.app_bar);
-        textView= (TextView) findViewById(R.id.hadder_text_1);
-        billrecyclerView =findViewById(R.id.bill_report_content);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        textView = (TextView) findViewById(R.id.hadder_text_1);
+        billrecyclerView = findViewById(R.id.bill_report_content);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         swipeRefressLayoutRecycler = findViewById(R.id.swipeRefressLayoutRecycler);
         Totamt = findViewById(R.id.Totamt);
@@ -84,19 +84,19 @@ private  Menu menu;
         addBill = findViewById(R.id.add_bill);
 
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(view ->onBackPressed());
+            toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         }
 
-        collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         fBillFilter = (FBillFilter) getSupportFragmentManager().findFragmentById(R.id.billfragment);
 
-        fab .setOnClickListener(view -> getBills());
+        fab.setOnClickListener(view -> getBills());
 
 
-        addBill.setOnClickListener((view)-> addBill(fBillFilter));
+        addBill.setOnClickListener((view) -> addBill(fBillFilter));
 
 
         if (vmBill.getOutlet() == null) {
@@ -134,23 +134,20 @@ private  Menu menu;
         });
 
 
-
-
         //getBills();
     }
 
 
-
-    public void getBills(){
+    public void getBills() {
         ViewCompat.setNestedScrollingEnabled(
                 billrecyclerView, false);
-        appBarLayout.setExpanded(false,true);
+        appBarLayout.setExpanded(false, true);
 
-        if (vmBill.getOutlet() != null){
+        if (vmBill.getOutlet() != null) {
             hideOption(R.id.action_filter);
-            vmBill.getBills(context,vmBill.getOutlet());
-        }else{
-            vmBill.getBills(context,fBillFilter.getSelectedCompany(),fBillFilter.getFDateSelected(),
+            vmBill.getBills(context, vmBill.getOutlet());
+        } else {
+            vmBill.getBills(context, fBillFilter.getSelectedCompany(), fBillFilter.getFDateSelected(),
                     fBillFilter.getTDateSelected());
         }
 
@@ -185,9 +182,9 @@ private  Menu menu;
     @Override
     protected void onResume() {
         super.onResume();
-       if (vmBill.isLoaded()) {
-           getBills();
-       }
+        if (vmBill.isLoaded()) {
+            getBills();
+        }
     }
 
     @Override
@@ -208,7 +205,7 @@ private  Menu menu;
 
 
     private void hideOption(int id) {
-        if(menu==null){
+        if (menu == null) {
             return;
         }
         MenuItem item = menu.findItem(id);
@@ -229,19 +226,21 @@ private  Menu menu;
             else
                 appBarLayout.setExpanded(false);
             return true;
-        } else  if (id == R.id.add) {
+        } else if (id == R.id.add) {
 
             addBill(fBillFilter);
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void showOption(int id) {
-        if(menu==null){
+        if (menu == null) {
             return;
         }
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
     }
+
     @Override
     public void setActvityTitle(String title) {
         textView.setText(title);
@@ -261,7 +260,6 @@ private  Menu menu;
         swipeRefressLayoutRecycler.setRefreshing(false);
 
 
-
     }
 
     @Override
@@ -271,13 +269,15 @@ private  Menu menu;
 
     @Override
     public void addBill(FBillFilter billFilter) {
+
+        MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("KEY_FILTER", "");
         Intent intent = new Intent(context, CompanyActivity.class);
         intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.BILL);
-        intent.putExtra("Companies",billFilter.getCompanies());
-        intent.putExtra("PayModes",billFilter.getPayModes());
-        intent.putExtra("DocDate",billFilter.getDOCDATE());
-        intent.putExtra("IS_DOC_DATE_CHANGEBLE",billFilter.getDocDateChangble());
-        intent.putExtra("IS_DOC_DATE_Required",true);
+        intent.putExtra("Companies", billFilter.getCompanies());
+        intent.putExtra("PayModes", billFilter.getPayModes());
+        intent.putExtra("DocDate", billFilter.getDOCDATE());
+        intent.putExtra("IS_DOC_DATE_CHANGEBLE", billFilter.getDocDateChangble());
+        intent.putExtra("IS_DOC_DATE_Required", true);
         startActivity(intent);
     }
 
@@ -290,7 +290,8 @@ private  Menu menu;
     }
 
     @Override
-    public void setCompanyName(String CompanyName) { }
+    public void setCompanyName(String CompanyName) {
+    }
 
     @Override
     public String getCompanyName() {
@@ -298,7 +299,8 @@ private  Menu menu;
     }
 
     @Override
-    public void setBillTitle(String titile) { }
+    public void setBillTitle(String titile) {
+    }
 
     @Override
     public void setmCompany(mCompany company) {
@@ -311,35 +313,36 @@ private  Menu menu;
         Intent intent = new Intent(context, CompanyCartActivity.class);
         intent.putExtra("order", order);
         intent.putExtra("customer", customer);
-        intent.putExtra("PayModes",fBillFilter.getPayModes());
+        intent.putExtra("PayModes", fBillFilter.getPayModes());
         startActivity(intent);
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) { return false; }
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
     @Override
-    public boolean onQueryTextChange(String newText) { return false; }
-
-
-
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 
 
     @Override
     public void Edit_Bill(mBill mbill) {
-        vmBill.getBillDet(context,mbill,"E");
+        vmBill.getBillDet(context, mbill, "E");
 
     }
 
     @Override
     public void Delete_Bill(mBill mbill) {
         AppAlert.getInstance().DecisionAlert(context,
-                "Delete !!!", "Are you sure to delete\nBill : "+mbill.getBILL_PRINT()+"\nBill Amt. :- "+mbill.getNET_AMT()+" ?",
+                "Delete !!!", "Are you sure to delete\nBill : " + mbill.getBILL_PRINT() + "\nBill Amt. :- " + mbill.getNET_AMT() + " ?",
                 new AppAlert.OnClickListener() {
                     @Override
                     public void onPositiveClicked(View item, String result) {
 
-                        vmBill.deleteBill(context,mbill);
+                        vmBill.deleteBill(context, mbill);
                     }
 
                     @Override
@@ -352,6 +355,6 @@ private  Menu menu;
 
     @Override
     public void OnClick_Bill(mBill mbill) {
-        vmBill.getBillDet(context,mbill,"V");
+        vmBill.getBillDet(context, mbill, "V");
     }
 }

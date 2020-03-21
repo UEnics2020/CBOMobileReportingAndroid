@@ -35,12 +35,12 @@ import utils_new.CustomDatePicker;
 public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
 
     private mBillOrder order = new mBillOrder();
-    private ArrayList<mBillItem>billItems=new ArrayList<>();
-    private String filterqry="";
+    private ArrayList<mBillItem> billItems = new ArrayList<>();
+    private String filterqry = "";
     private Boolean syncItem = true;
 
 
-    private BillItemDB billDB ;
+    private BillItemDB billDB;
     private BillBatchDB billbatchDB;
 
     @Override
@@ -49,30 +49,31 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
         billDB = new BillItemDB(context);
         billbatchDB = new BillBatchDB(context);
 
-        if (view != null){
+        if (view != null) {
             view.getReferencesById();
             //orderDB = new OrderDB(context);
             //setStatus("P");
             view.setTile(view.getActivityTitle());
-            if (getOrder() != null){
+            if (getOrder() != null) {
                 view.onOrderChanged(getOrder());
             }
             getOrderItem(context);
         }
     }
 
-    public mBillOrder getOrder(){
+    public mBillOrder getOrder() {
         return order;
     }
-    public void setOrder(mBillOrder order){
+
+    public void setOrder(mBillOrder order) {
         this.order = order;
-        if (view != null){
+        if (view != null) {
             view.onOrderChanged(getOrder());
         }
     }
 
 
-    public void setSync(Boolean syncItem){
+    public void setSync(Boolean syncItem) {
         this.syncItem = syncItem;
     }
 
@@ -90,7 +91,7 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
     }
 
 
-    private mBillItem GetOrderItemWhere(mBillItem item){
+    private mBillItem GetOrderItemWhere(mBillItem item) {
 
         if (getOrder() == null)
             return null;
@@ -106,26 +107,29 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
         return null;
     }
 
-    public void addItem(mBillItem item){
+    public void addItem(mBillItem item) {
         mBillItem orderItem = GetOrderItemWhere(item);
-        if (orderItem != null){
+        if (orderItem != null) {
             getOrder().getItems().remove(orderItem);
         }
         if (item.getQty() != 0.0) {
             getOrder().getItems().add(item);
         }
-        if (view != null){
+        if (view != null) {
             view.onOrderChanged(getOrder());
         }
     }
 
 
-    private void getOrderItem(AppCompatActivity context){
-        getOrderItem(context,syncItem);
+    private void getOrderItem(AppCompatActivity context) {
+        getOrderItem(context, syncItem);
     }
-    public void getOrderItem(final AppCompatActivity context, Boolean SyncYN){
 
-        billItems = billDB.items(getFilterQry());
+    public void getOrderItem(final AppCompatActivity context, Boolean SyncYN) {
+
+//        billItems = billDB.items(getFilterQry());
+//        priyesh
+        billItems = billDB.itemsNew(getFilterQry());
 
 
         for (mBillItem item : billItems) {
@@ -138,7 +142,7 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
             }
         }
 
-        if (view != null){
+        if (view != null) {
 
             view.onItemsChanged(billItems);
         }
@@ -152,7 +156,7 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
             request.put("iPA_ID", view.getUserID());
             request.put("iCOMPANY_ID", view.getPartyID());
             try {
-                request.put("DOC_DATE", CustomDatePicker.formatDate(CustomDatePicker.getDate(order.getDocDate(),CustomDatePicker.ShowFormatOld) ,CustomDatePicker.CommitFormat));
+                request.put("DOC_DATE", CustomDatePicker.formatDate(CustomDatePicker.getDate(order.getDocDate(), CustomDatePicker.ShowFormatOld), CustomDatePicker.CommitFormat));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -168,7 +172,7 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
                     .setResponse(new CBOServices.APIResponse() {
                         @Override
                         public void onComplete(Bundle bundle) throws Exception {
-                            getOrderItem(context,false);
+                            getOrderItem(context, false);
                         }
 
                         @Override
@@ -179,10 +183,9 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
 
                         @Override
                         public void onError(String s, String s1) {
-                            AppAlert.getInstance().getAlert(context,s,s1);
+                            AppAlert.getInstance().getAlert(context, s, s1);
                         }
                     }));
-
 
 
             //End of call to service
@@ -193,12 +196,12 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
 
 
     public void parser1(Bundle result) throws JSONException {
-        if (result!=null ) {
+        if (result != null) {
             String table0 = result.getString("Tables0");
             JSONArray jsonArray = new JSONArray(table0);
 
             //if (jsonArray.length() > 0) {
-                billDB.delete();
+            billDB.delete();
             //}
 
             ArrayList<mBillItem> items = new ArrayList<>();
@@ -207,7 +210,10 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
                 mBillItem item = new mBillItem()
                         .setId(jsonObject2.getString("ITEM_ID"))
                         .setName(jsonObject2.getString("ITEM_NAME"))
-                        .setStock(jsonObject2.getDouble("STOCK_QTY"));
+                        .setStock(jsonObject2.getDouble("STOCK_QTY"))
+                        .setBRAND(jsonObject2.getString("BRAND"))
+                        .setSUB_CATEGORY(jsonObject2.getString("SUB_CATEGORY"))
+                        .setCATEGORY(jsonObject2.getString("CATEGORY"));
 
 
                 mTax GST = new mTax(eTax.getTax(jsonObject2.getInt("GST_TYPE")));
@@ -220,13 +226,15 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
 
             }
 
-            billDB.insert(items);
+//            billDB.insert(items);
+            //priyesh
+            billDB.insertNew(items);
 
             String table1 = result.getString("Tables1");
             jsonArray = new JSONArray(table1);
 
             //if (jsonArray.length() > 0) {
-                billbatchDB.delete();
+            billbatchDB.delete();
             //}
 
             ArrayList<mBillBatch> batches = new ArrayList<>();
@@ -245,7 +253,7 @@ public class vmBill_ItemFilter extends CBOViewModel<IitemNewOrder> {
                         .setSTOCK(jsonObject2.getDouble("STOCK_QTY"));
 
                 mDeal deal = new mDeal();
-                deal.setType(eDeal.get(jsonObject2.getString("DEAL_TYPE") ))
+                deal.setType(eDeal.get(jsonObject2.getString("DEAL_TYPE")))
                         .setFreeQty(jsonObject2.getDouble("DEAL_QTY"))
                         .setQty(jsonObject2.getDouble("DEAL_ON"));
                 item_batch.setDeal(deal);

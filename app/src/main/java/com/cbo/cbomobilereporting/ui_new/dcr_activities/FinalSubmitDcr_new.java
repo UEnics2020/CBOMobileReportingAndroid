@@ -139,7 +139,7 @@ public class FinalSubmitDcr_new extends CustomActivity implements up_down_ftp.Ad
 
         if (MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("DCRSUMMARYONFINALSUBMIT", "N").equalsIgnoreCase("Y")) {
             Intent intent1 = new Intent(this, DCR_Summary_new.class);
-            intent1.putExtra("BUTTONALLOW","Y");
+            intent1.putExtra("BUTTONALLOW", "Y");
             startActivity(intent1);
         }
 
@@ -1005,6 +1005,7 @@ public class FinalSubmitDcr_new extends CustomActivity implements up_down_ftp.Ad
 
     private void parser6(Bundle result) throws JSONException {
         MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("ACTUALFARE", "0");
+        MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("IS_CHECH_COUNT", "0");
         customVariablesAndMethod.SetLastCallLocation(context);
         String table0 = result.getString("Tables0");
         JSONArray jsonArray1 = new JSONArray(table0);

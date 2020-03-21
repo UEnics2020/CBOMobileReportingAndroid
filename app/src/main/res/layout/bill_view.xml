@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -23,8 +22,8 @@
 
 
             <fragment
-                android:name="bill.BillReport.FBillFilter"
                 android:id="@+id/billfragment"
+                android:name="bill.BillReport.FBillFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="?attr/actionBarSize"
@@ -38,36 +37,34 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
+                android:background="?colorPrimaryDark"
                 android:elevation="5dp"
-                app:contentInsetStart="0dp"
                 app:contentInsetEnd="0dp"
                 app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
                 app:contentInsetStartWithNavigation="0dp"
-                android:background="?colorPrimaryDark"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_collapseParallaxMultiplier="0.7">
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.7"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/hadder_text_1"
-                        android:lines="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:lines="1"
                         android:text="Gift "
-                        android:textStyle="bold"
                         android:textColor="#fff"
                         android:textSize="16dp"
-                        />
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>
-
 
 
             <!-- <ImageView
@@ -80,26 +77,25 @@
                  app:layout_collapseParallaxMultiplier="0.7" />-->
 
 
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/bill_list_doctor"
-        android:id="@+id/containt"/>
+    <include
+        android:id="@+id/containt"
+        layout="@layout/bill_list_doctor" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:pressedTranslationZ="12dp"
-        app:elevation="6dp"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_menu_send"
         app:backgroundTint="@color/colorCollection"
-        />
+        app:elevation="6dp"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@android:drawable/ic_menu_send" />
 
 
     <androidx.cardview.widget.CardView
@@ -107,39 +103,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/containt"
-        app:pressedTranslationZ="12dp"
-        app:elevation="6dp"
-        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/colorCollection"
-        app:layout_anchorGravity="bottom|end">
+        app:cardCornerRadius="20dp"
+        app:elevation="6dp"
+        app:layout_anchor="@id/containt"
+        app:layout_anchorGravity="bottom|end"
+        app:pressedTranslationZ="12dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="6dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="6dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
+                android:text="+"
                 android:textColor="@color/white"
-                android:textSize="17sp"/>
+                android:textSize="17sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:textSize="17sp"
-                android:text="New Bill"/>
+                android:text="New Sale"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
         </LinearLayout>
-
 
 
     </androidx.cardview.widget.CardView>

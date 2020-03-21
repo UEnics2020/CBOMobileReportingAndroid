@@ -13,23 +13,27 @@ import cbomobilereporting.cbo.com.cboorder.Model.mDiscount;
 import cbomobilereporting.cbo.com.cboorder.Model.mItem;
 import cbomobilereporting.cbo.com.cboorder.Model.mTax;
 
-public class mBillItem  implements Serializable {
+public class mBillItem implements Serializable {
+
     private String Id = "0";
-    private  String Name="";
-    private String BATCH_ID="0";
-    private String BATCH_NO="";
-    private String MFG_DATE="";
-    private String EXP_DATE="";
-    private String PACK="";
-    private Double MRP_RATE=0.0D;
-    private Double SALE_RATE=0.0D;
+    private String Name = "";
+    private String BRAND = "";
+    private String CATEGORY = "";
+    private String SUB_CATEGORY = "";
+    private String BATCH_ID = "0";
+    private String BATCH_NO = "";
+    private String MFG_DATE = "";
+    private String EXP_DATE = "";
+    private String PACK = "";
+    private Double MRP_RATE = 0.0D;
+    private Double SALE_RATE = 0.0D;
     private Double Qty = 0.0;
     private Double FreeQty = 0.0D;
     private Double NetAmt = 0.0D;
-    private Double Stock =-1.0;
-    private mTax GST =  new mTax(eTax.NONE);
-    private  Double SGSTAmt =0.0;
-    private  Double CGSTAmt =0.0;
+    private Double Stock = -1.0;
+    private mTax GST = new mTax(eTax.NONE);
+    private Double SGSTAmt = 0.0;
+    private Double CGSTAmt = 0.0;
     private mDeal Deal = new mDeal();
     private Double Amt = 0.0D;
     private mDiscount ManualDiscount = new mDiscount("Manual Discount");
@@ -47,6 +51,22 @@ public class mBillItem  implements Serializable {
         return Id;
     }
 
+    @PropertyName("BRAND")
+    public String getBRAND() {
+        return BRAND;
+    }
+
+    @PropertyName("CATEGORY")
+    public String getCATEGORY() {
+        return CATEGORY;
+    }
+
+    @PropertyName("SUB_CATEGORY")
+    public String getSUB_CATEGORY() {
+        return SUB_CATEGORY;
+    }
+
+
     @PropertyName("Name")
     public String getName() {
         return Name;
@@ -55,7 +75,7 @@ public class mBillItem  implements Serializable {
     @PropertyName("Qty")
     public Double getQty() {
         return Qty;
-   }
+    }
 
     @PropertyName("FreeQty")
     public Double getFreeQty() {
@@ -152,7 +172,7 @@ public class mBillItem  implements Serializable {
     }
 
     @PropertyName("Stock")
-    public Double getStock(){
+    public Double getStock() {
         return Stock;
     }
 
@@ -160,8 +180,8 @@ public class mBillItem  implements Serializable {
         StringBuilder discounts = new StringBuilder();
         int count = 0;
 
-        for (mDiscount discount : getMiscDiscount()){
-            if (count != 0){
+        for (mDiscount discount : getMiscDiscount()) {
+            if (count != 0) {
                 discounts.append(",");
             }
             discounts.append(discount.getPercent()).append("%");
@@ -185,12 +205,31 @@ public class mBillItem  implements Serializable {
 
     @PropertyName("Id")
     public mBillItem setId(String id) {
-        Id = id;return this;
+        Id = id;
+        return this;
     }
 
     @PropertyName("Name")
     public mBillItem setName(String name) {
         Name = name;
+        return this;
+    }
+
+    @PropertyName("BRAND")
+    public mBillItem setBRAND(String brand) {
+        BRAND = brand;
+        return this;
+    }
+
+    @PropertyName("CATEGORY")
+    public mBillItem setCATEGORY(String category) {
+        CATEGORY = category;
+        return this;
+    }
+
+    @PropertyName("SUB_CATEGORY")
+    public mBillItem setSUB_CATEGORY(String sub_category) {
+        SUB_CATEGORY = sub_category;
         return this;
     }
 
@@ -273,15 +312,15 @@ public class mBillItem  implements Serializable {
     public Double calculateFreeQty(Double qty) {
         new DecimalFormat("0");
         Double FQty = 0.0D;
-        switch(this.getDeal().getType()) {
+        switch (this.getDeal().getType()) {
             case All:
                 FQty = qty / this.getDeal().getQty() * this.getDeal().getFreeQty();
                 break;
             case full:
-                FQty = 0.0D + (double)((int)(qty / this.getDeal().getQty())) * this.getDeal().getFreeQty();
+                FQty = 0.0D + (double) ((int) (qty / this.getDeal().getQty())) * this.getDeal().getFreeQty();
                 break;
             case Half:
-                FQty = 0.0D + (double)((int)(qty / this.getDeal().getQty())) * (this.getDeal().getFreeQty() / 2.0D);
+                FQty = 0.0D + (double) ((int) (qty / this.getDeal().getQty())) * (this.getDeal().getFreeQty() / 2.0D);
                 break;
             case Exact:
                 FQty = qty.equals(this.getDeal().getQty()) ? this.getDeal().getFreeQty() : 0.0D;
@@ -289,8 +328,6 @@ public class mBillItem  implements Serializable {
 
         return FQty;
     }
-
-
 
 
     @PropertyName("Deal")
@@ -326,7 +363,7 @@ public class mBillItem  implements Serializable {
         Amt = Amt * (1.0D - this.getManualDiscount().getPercent() * 0.01D);
         Amt = Amt * (1.0D - this.getMangerDiscount().getPercent() * 0.01D);
 
-        for (mDiscount discount : getMiscDiscount()){
+        for (mDiscount discount : getMiscDiscount()) {
             Amt = Amt * (1.0D - discount.getPercent() * 0.01D);
         }
 

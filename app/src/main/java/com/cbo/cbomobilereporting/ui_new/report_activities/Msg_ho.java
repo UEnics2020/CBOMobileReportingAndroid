@@ -44,7 +44,7 @@ import utils_new.Service_Call_From_Multiple_Classes;
 
 public class Msg_ho extends AppCompatActivity {
 
-    String message="0",title;
+    String message = "0", title;
     androidx.appcompat.widget.Toolbar toolbar;
     ImageView close;
     Button back;
@@ -58,20 +58,20 @@ public class Msg_ho extends AppCompatActivity {
 
 
     private ProgressDialog progressDialog;
-    String menu_code="";
-    int count=0;
-    String previous_url="";
+    String menu_code = "";
+    int count = 0;
+    String previous_url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(getIntent().getStringExtra("msg")==null){
-            message="0";
-            title="Message form HO";
-        }else{
-            message=getIntent().getStringExtra("msg");
-            title="Notification";
+        if (getIntent().getStringExtra("msg") == null) {
+            message = "0";
+            title = "Message form HO";
+        } else {
+            message = getIntent().getStringExtra("msg");
+            title = "Notification";
         }
-        if(message.equals("1")){
+        if (message.equals("1")) {
             setTheme(R.style.Appdilogtheme);
         }
         super.onCreate(savedInstanceState);
@@ -83,12 +83,12 @@ public class Msg_ho extends AppCompatActivity {
         hader_text.setText(title);
         setSupportActionBar(toolbar);
 
-        close= (ImageView) findViewById(R.id.close);
-        back= (Button) findViewById(R.id.back);
+        close = (ImageView) findViewById(R.id.close);
+        back = (Button) findViewById(R.id.back);
         main = (LinearLayout) findViewById(R.id.main);
 
-        context=this;
-        customVariablesAndMethod=Custom_Variables_And_Method.getInstance();
+        context = this;
+        customVariablesAndMethod = Custom_Variables_And_Method.getInstance();
 
         cbohelp = new CBO_DB_Helper(this);
 
@@ -108,7 +108,7 @@ public class Msg_ho extends AppCompatActivity {
         bundle = getIntent();
         if ((bundle != null) && ((bundle.getStringExtra("msg_ho")) != null)) {
             url = bundle.getStringExtra("msg_ho");
-        }else {
+        } else {
             url = "http://www.cboservices.com";
         }
 
@@ -130,15 +130,13 @@ public class Msg_ho extends AppCompatActivity {
         webView.getSettings().setUseWideViewPort(true);
 
 
-        webView.setWebViewClient(new HelloWebViewClient()
-        {
+        webView.setWebViewClient(new HelloWebViewClient() {
             @Override
-            public void onPageFinished(WebView view, String url)
-            {
+            public void onPageFinished(WebView view, String url) {
                 //Calling an init method that tells the website, we're ready
                 webView.loadUrl("javascript:m2Init()");
 
-                if (url.toLowerCase().contains(".pdf")){
+                if (url.toLowerCase().contains(".pdf")) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setDataAndType(Uri.parse(url), "application/pdf");
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -156,9 +154,9 @@ public class Msg_ho extends AppCompatActivity {
                 pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 pdfIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);*/
 
-                }else{
+                } else {
                     page11(webView);
-                    previous_url=url;
+                    previous_url = url;
                 }
 
                 progressDialog.dismiss();
@@ -167,35 +165,40 @@ public class Msg_ho extends AppCompatActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 
-                customVariablesAndMethod.msgBox(context,"error" + error);
+                customVariablesAndMethod.msgBox(context, "error" + error);
             }
         });
-
 
 
         if (url.toLowerCase().contains("https://play.google.com/store/apps/details?id=com.cbo.cbomobilereporting")) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.cbo.cbomobilereporting&hl=en"));
             startActivity(i);
             finish();
-        }if (url.toLowerCase().contains("play.google.com/store/apps/")) {
+        }
+        if (url.toLowerCase().contains("play.google.com/store/apps/")) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(i);
             finish();
-        }else {
+        } else {
 
-            if(!url.toLowerCase().contains("http://") && !url.toLowerCase().contains("emulated/0")){
-                url="http://"+url;
-            }else if(url.toLowerCase().contains("emulated/0")){
-                url="file:///"+url;
+//            if (!(url.toLowerCase().contains("http://") || (url.toLowerCase().contains("https://") ) && !url.toLowerCase().contains("emulated/0"))) {
+//                url = "http://" + url;
+//            } else if (url.toLowerCase().contains("emulated/0")) {
+//                url = "file:///" + url;
+//            }
+
+            if(!url.startsWith("http")&&!url.toLowerCase().contains("emulated/0")){
+                url = "http://" + url;
+            } else if (url.toLowerCase().contains("emulated/0")) {
+                url = "file:///" + url;
             }
-
-            Custom_Variables_And_Method.GLOBAL_LATLON =  customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"shareLatLong",Custom_Variables_And_Method.GLOBAL_LATLON);
-            Custom_Variables_And_Method.DCR_DATE_TO_SUBMIT=customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"DCR_DATE");
-            if(!url.contains("emulated/0") && !url.isEmpty()){
-                if ( url.contains("?")) {
-                    url = url + "&LAT_LONG=" + Custom_Variables_And_Method.GLOBAL_LATLON ;
-                }else{
-                    url = url + "?LAT_LONG=" + Custom_Variables_And_Method.GLOBAL_LATLON ;
+            Custom_Variables_And_Method.GLOBAL_LATLON = customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "shareLatLong", Custom_Variables_And_Method.GLOBAL_LATLON);
+            Custom_Variables_And_Method.DCR_DATE_TO_SUBMIT = customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "DCR_DATE");
+            if (!url.contains("emulated/0") && !url.isEmpty()) {
+                if (url.contains("?")) {
+                    url = url + "&LAT_LONG=" + Custom_Variables_And_Method.GLOBAL_LATLON;
+                } else {
+                    url = url + "?LAT_LONG=" + Custom_Variables_And_Method.GLOBAL_LATLON;
                 }
             }
 
@@ -240,11 +243,9 @@ public class Msg_ho extends AppCompatActivity {
     }
 
 
-
-
     private class HelloWebViewClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest  url) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
 
             //if (Build.VERSION.SDK_INT >= 24) {
             return super.shouldOverrideUrlLoading(view, url);
@@ -259,7 +260,7 @@ public class Msg_ho extends AppCompatActivity {
 
     private final static Object methodInvoke(Object obj, String method, Class<?>[] parameterTypes, Object[] args) {
         try {
-            Method m = obj.getClass().getMethod(method, new Class[] { boolean.class });
+            Method m = obj.getClass().getMethod(method, new Class[]{boolean.class});
             m.invoke(obj, args);
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,15 +281,15 @@ public class Msg_ho extends AppCompatActivity {
         settings.setUseWideViewPort(true);
         settings.setSupportZoom(true);
         // settings.setPluginsEnabled(true);
-        methodInvoke(settings, "setPluginsEnabled", new Class[] { boolean.class }, new Object[] { true });
+        methodInvoke(settings, "setPluginsEnabled", new Class[]{boolean.class}, new Object[]{true});
         // settings.setPluginState(PluginState.ON);
-        methodInvoke(settings, "setPluginState", new Class[] { WebSettings.PluginState.class }, new Object[] { WebSettings.PluginState.ON });
+        methodInvoke(settings, "setPluginState", new Class[]{WebSettings.PluginState.class}, new Object[]{WebSettings.PluginState.ON});
         // settings.setPluginsEnabled(true);
-        methodInvoke(settings, "setPluginsEnabled", new Class[] { boolean.class }, new Object[] { true });
+        methodInvoke(settings, "setPluginsEnabled", new Class[]{boolean.class}, new Object[]{true});
         // settings.setAllowUniversalAccessFromFileURLs(true);
-        methodInvoke(settings, "setAllowUniversalAccessFromFileURLs", new Class[] { boolean.class }, new Object[] { true });
+        methodInvoke(settings, "setAllowUniversalAccessFromFileURLs", new Class[]{boolean.class}, new Object[]{true});
         // settings.setAllowFileAccessFromFileURLs(true);
-        methodInvoke(settings, "setAllowFileAccessFromFileURLs", new Class[] { boolean.class }, new Object[] { true });
+        methodInvoke(settings, "setAllowFileAccessFromFileURLs", new Class[]{boolean.class}, new Object[]{true});
 
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.clearHistory();
@@ -347,11 +348,11 @@ public class Msg_ho extends AppCompatActivity {
 
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-            switch (consoleMessage.message().toLowerCase()){
-                case "window.close();" :
+            switch (consoleMessage.message().toLowerCase()) {
+                case "window.close();":
                     finish();
                     break;
-                case "sync" :
+                case "sync":
                     new Service_Call_From_Multiple_Classes().DownloadAll(context, new Response() {
                         @Override
                         public void onSuccess(Bundle bundle) {
@@ -360,12 +361,12 @@ public class Msg_ho extends AppCompatActivity {
 
                         @Override
                         public void onError(String s, String s1) {
-                            AppAlert.getInstance().getAlert(context,s,s1);
+                            AppAlert.getInstance().getAlert(context, s, s1);
                         }
                     });
                     break;
                 default:
-                    Log.d("web",consoleMessage.message().toLowerCase());
+                    Log.d("web", consoleMessage.message().toLowerCase());
 
             }
 
@@ -437,7 +438,7 @@ public class Msg_ho extends AppCompatActivity {
             String acceptTypes[] = fileChooserParams.getAcceptTypes();
 
             String acceptType = "";
-            for (int i = 0; i < acceptTypes.length; ++ i) {
+            for (int i = 0; i < acceptTypes.length; ++i) {
                 if (acceptTypes[i] != null && acceptTypes[i].length() != 0)
                     acceptType += acceptTypes[i] + ";";
             }
@@ -467,7 +468,9 @@ public class Msg_ho extends AppCompatActivity {
 
             return true;
         }
-    };
+    }
+
+    ;
 
     class Controller {
         final static int FILE_SELECTED = 4;
@@ -524,15 +527,19 @@ public class Msg_ho extends AppCompatActivity {
         private boolean mHandled;
         private boolean mCaughtActivityNotFoundException;
         private Msg_ho.Controller mController;
+
         public UploadHandler(Msg_ho.Controller controller) {
             mController = controller;
         }
+
         String getFilePath() {
             return mCameraFilePath;
         }
+
         boolean handled() {
             return mHandled;
         }
+
         void onResult(int resultCode, Intent intent) {
             if (resultCode == AppCompatActivity.RESULT_CANCELED && mCaughtActivityNotFoundException) {
                 // Couldn't resolve an activity, we are going to try again so skip
@@ -562,6 +569,7 @@ public class Msg_ho extends AppCompatActivity {
             mHandled = true;
             mCaughtActivityNotFoundException = false;
         }
+
         void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
             final String imageMimeType = "image/*";
             final String videoMimeType = "video/*";
@@ -652,6 +660,7 @@ public class Msg_ho extends AppCompatActivity {
             // file upload chooser.
             startActivity(createDefaultOpenableIntent());
         }
+
         private void startActivity(Intent intent) {
             try {
                 mController.getActivity().startActivityForResult(intent, Msg_ho.Controller.FILE_SELECTED);
@@ -669,6 +678,7 @@ public class Msg_ho extends AppCompatActivity {
                 }
             }
         }
+
         private Intent createDefaultOpenableIntent() {
             // Create and return a chooser with the default OPENABLE
             // actions including the camera, camcorder and sound
@@ -681,6 +691,7 @@ public class Msg_ho extends AppCompatActivity {
             chooser.putExtra(Intent.EXTRA_INTENT, i);
             return chooser;
         }
+
         private Intent createChooserIntent(Intent... intents) {
             Intent chooser = new Intent(Intent.ACTION_CHOOSER);
             chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents);
@@ -689,12 +700,14 @@ public class Msg_ho extends AppCompatActivity {
                             .getString(R.string.choose_upload));
             return chooser;
         }
+
         private Intent createOpenableIntent(String type) {
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType(type);
             return i;
         }
+
         private Intent createCameraIntent() {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File externalDataDir = Environment.getExternalStoragePublicDirectory(
@@ -707,14 +720,15 @@ public class Msg_ho extends AppCompatActivity {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mCameraFilePath)));
             return cameraIntent;
         }
+
         private Intent createCamcorderIntent() {
             return new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         }
+
         private Intent createSoundRecorderIntent() {
             return new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
         }
     }
-
 
 
     @Override
@@ -726,17 +740,16 @@ public class Msg_ho extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void page11(View view)
-    {
+    public void page11(View view) {
         webView.loadUrl("javascript:m2LoadPage(1)");
     }
 
 
     @Override
     public void onBackPressed() {
-        if(menu_code.equals("") || count==2) {
+        if (menu_code.equals("") || count == 2) {
             finish();
-        }else{
+        } else {
             //Start of call to service
 
            /* HashMap<String,String> request=new HashMap<>();
@@ -756,16 +769,16 @@ public class Msg_ho extends AppCompatActivity {
 */
             //End of call to service
 
-            if(!message.equals("1")) {
+            if (!message.equals("1")) {
                 finish();
             }
         }
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(message.equals("1")){
+        if (message.equals("1")) {
 
             //toolbar.setVisibility(View.GONE);
             close.setVisibility(View.VISIBLE);
@@ -777,7 +790,7 @@ public class Msg_ho extends AppCompatActivity {
             params.setMargins(25, -15, 0, 0);
             main.setLayoutParams(params);
 
-        }else{
+        } else {
 
             close.setVisibility(View.GONE);
             back.setVisibility(View.GONE);

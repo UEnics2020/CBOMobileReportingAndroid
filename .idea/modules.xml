@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" filepath="$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CBOMobileReportingAndroid.iml" filepath="$PROJECT_DIR$/CBOMobileReportingAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/attachment/attachment.iml" filepath="$PROJECT_DIR$/attachment/attachment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cbo_utils/cbo_utils.iml" filepath="$PROJECT_DIR$/cbo_utils/cbo_utils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cboorder/cboorder.iml" filepath="$PROJECT_DIR$/cboorder/cboorder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dbhelper/dbhelper.iml" filepath="$PROJECT_DIR$/dbhelper/dbhelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" filepath="$PROJECT_DIR$/CBOLibrary/CBOLibrary.iml" group="CBOMobileReportingAndroid/CBOLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/CBOMobileReportingAndroid.iml" filepath="$PROJECT_DIR$/CBOMobileReportingAndroid.iml" group="CBOMobileReportingAndroid" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="CBOMobileReportingAndroid/app" />
+      <module fileurl="file://$PROJECT_DIR$/attachment/attachment.iml" filepath="$PROJECT_DIR$/attachment/attachment.iml" group="CBOMobileReportingAndroid/attachment" />
+      <module fileurl="file://$PROJECT_DIR$/cbo_utils/cbo_utils.iml" filepath="$PROJECT_DIR$/cbo_utils/cbo_utils.iml" group="CBOMobileReportingAndroid/cbo_utils" />
+      <module fileurl="file://$PROJECT_DIR$/cboorder/cboorder.iml" filepath="$PROJECT_DIR$/cboorder/cboorder.iml" group="CBOMobileReportingAndroid/cboorder" />
+      <module fileurl="file://$PROJECT_DIR$/dbhelper/dbhelper.iml" filepath="$PROJECT_DIR$/dbhelper/dbhelper.iml" group="CBOMobileReportingAndroid/dbhelper" />
     </modules>
   </component>
 </project>

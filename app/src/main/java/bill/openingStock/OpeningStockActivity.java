@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cbo.cbomobilereporting.MyCustumApplication;
 import com.cbo.cbomobilereporting.R;
 import com.cbo.cbomobilereporting.databaseHelper.Call.Db.BillOrderDB;
 import com.cbo.cbomobilereporting.ui_new.CustomActivity;
@@ -302,6 +303,8 @@ public class OpeningStockActivity extends CustomActivity implements IOpening,
 
     @Override
     public void addNewStock(FBillFilter fBillFilter) {
+
+        MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("KEY_FILTER","");
         Intent intent = new Intent(context, CompanyActivity.class);
         intent.putExtra("page", vmOpening.getPage());
         intent.putExtra("doc_type", OpeningStockActivity.DOC_TYPE.valueOf(vmOpening.getPage().getCode()));

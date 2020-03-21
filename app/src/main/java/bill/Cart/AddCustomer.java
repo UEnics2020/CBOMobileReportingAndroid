@@ -42,10 +42,10 @@ public class AddCustomer extends CustomActivity {
 
     mCustomer customer = new mCustomer();
 
-    Button add,cancel;
-    EditText mobile,name,gst;
-    ImageView dob_img,doa_img,bill_date_img;
-    TextView dob,doa,bill_amount,bill_date;
+    Button add, cancel;
+    EditText mobile, name, gst;
+    ImageView dob_img, doa_img, bill_date_img;
+    TextView dob, doa, bill_amount, bill_date;
     mPay selectedPayMode;
     Spinner paymode;
     ArrayList<mPay> paymodes = new ArrayList<>();
@@ -77,12 +77,11 @@ public class AddCustomer extends CustomActivity {
         paymodes = (ArrayList<mPay>) getIntent().getSerializableExtra("PayModes");
 
 
-
         aPayMode dataAdapter = new aPayMode(this, android.R.layout.simple_spinner_item, paymodes);
         paymode.setAdapter(dataAdapter);
-        int index =0;
-        for (mPay pay: paymodes){
-            if (pay.getName().equalsIgnoreCase(order.getPayMode())){
+        int index = 0;
+        for (mPay pay : paymodes) {
+            if (pay.getName().equalsIgnoreCase(order.getPayMode())) {
                 paymode.setSelection(index);
             }
             index++;
@@ -91,7 +90,7 @@ public class AddCustomer extends CustomActivity {
 
         updateCustomerView(customer);
         bill_date.setText(order.getDocDate());
-        bill_amount.setText(AddToCartView.toCurrency(String.format("%.2f",order.getTotAmt ())));
+        bill_amount.setText(AddToCartView.toCurrency(String.format("%.2f", order.getTotAmt())));
 
         paymode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -118,7 +117,7 @@ public class AddCustomer extends CustomActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length() == 10){
+                if (s.toString().length() == 10) {
                     getCustomer();
                 }
             }
@@ -133,17 +132,17 @@ public class AddCustomer extends CustomActivity {
             @Override
             public void onClick(View v) {
 
-                if (dob.getText().toString().isEmpty()){
+                if (dob.getText().toString().isEmpty()) {
                     dob.setText(CustomDatePicker.currentDate(CustomDatePicker.ShowFormat));
                 }
                 try {
-                    new CustomDatePicker(context, null,null
+                    new CustomDatePicker(context, null, null
 
-                    ).Show(CustomDatePicker.getDate(dob.getText().toString(),  CustomDatePicker.ShowFormat)
+                    ).Show(CustomDatePicker.getDate(dob.getText().toString(), CustomDatePicker.ShowFormat)
                             , new CustomDatePicker.ICustomDatePicker() {
                                 @Override
                                 public void onDateSet(Date date) {
-                                    dob.setText(CustomDatePicker.formatDate(date,CustomDatePicker.ShowFormat));
+                                    dob.setText(CustomDatePicker.formatDate(date, CustomDatePicker.ShowFormat));
                                 }
                             });
                 } catch (ParseException e) {
@@ -157,14 +156,14 @@ public class AddCustomer extends CustomActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    new CustomDatePicker(context, null,null
+                    new CustomDatePicker(context, null, null
 
-                    ).Show(CustomDatePicker.getDate(bill_date.getText().toString(),  CustomDatePicker.CommitFormat)
+                    ).Show(CustomDatePicker.getDate(bill_date.getText().toString(), CustomDatePicker.CommitFormat)
                             , new CustomDatePicker.ICustomDatePicker() {
                                 @Override
                                 public void onDateSet(Date date) {
-                                    bill_date.setText(CustomDatePicker.formatDate(date,CustomDatePicker.CommitFormat));
-                                    order.setBillDate(CustomDatePicker.formatDate(date,CustomDatePicker.CommitFormat));
+                                    bill_date.setText(CustomDatePicker.formatDate(date, CustomDatePicker.CommitFormat));
+                                    order.setBillDate(CustomDatePicker.formatDate(date, CustomDatePicker.CommitFormat));
                                 }
                             });
                 } catch (ParseException e) {
@@ -180,17 +179,17 @@ public class AddCustomer extends CustomActivity {
             public void onClick(View v) {
                 try {
 
-                    if (doa.getText().toString().isEmpty()){
+                    if (doa.getText().toString().isEmpty()) {
                         doa.setText(CustomDatePicker.currentDate(CustomDatePicker.ShowFormat));
                     }
 
-                    new CustomDatePicker(context, null,null
+                    new CustomDatePicker(context, null, null
 
-                    ).Show(CustomDatePicker.getDate(doa.getText().toString(),  CustomDatePicker.ShowFormat)
+                    ).Show(CustomDatePicker.getDate(doa.getText().toString(), CustomDatePicker.ShowFormat)
                             , new CustomDatePicker.ICustomDatePicker() {
                                 @Override
                                 public void onDateSet(Date date) {
-                                    doa.setText(CustomDatePicker.formatDate(date,CustomDatePicker.ShowFormat));
+                                    doa.setText(CustomDatePicker.formatDate(date, CustomDatePicker.ShowFormat));
                                 }
                             });
                 } catch (ParseException e) {
@@ -214,7 +213,7 @@ public class AddCustomer extends CustomActivity {
                                 .setDOB(CustomDatePicker.formatDate(CustomDatePicker.getDate(dob.getText().toString(), CustomDatePicker.ShowFormat), CustomDatePicker.CommitFormat));
 
                         onSendResponse(customer);
-                    }else{
+                    } else {
                         AppAlert.getInstance().Alert(context, "Invalid GST!!!", "Please Enter Valid GST No.",
                                 new View.OnClickListener() {
                                     @Override
@@ -241,14 +240,13 @@ public class AddCustomer extends CustomActivity {
         });
 
 
-
     }
 
     private void CustomerCommit(mCustomer customer) {
         HashMap<String, String> request = new HashMap<>();
         request.put("sCompanyFolder", MyCustumApplication.getInstance().getUser().getCompanyCode());
         request.put("iPA_ID", MyCustumApplication.getInstance().getUser().getID());
-        request.put("iID", ""+ customer.getId());
+        request.put("iID", "" + customer.getId());
         request.put("MOBILE", customer.getMobile());
         request.put("CUSTOMER_NAME", customer.getMobile());
         request.put("DOB", customer.getDOB());
@@ -287,7 +285,7 @@ public class AddCustomer extends CustomActivity {
                 }));
     }
 
-    private void getCustomer(){
+    private void getCustomer() {
 
 
         if (!customer.getMobile().equalsIgnoreCase(mobile.getText().toString())) {
@@ -322,7 +320,7 @@ public class AddCustomer extends CustomActivity {
                                         .setGST_NO(object.getString("GST_NO"));
                             }
 
-                            if (!customer.getMobile().equalsIgnoreCase(mobile.getText().toString())){
+                            if (!customer.getMobile().equalsIgnoreCase(mobile.getText().toString())) {
                                 customer.setMobile(mobile.getText().toString())
                                         .setName("")
                                         .setId(0)
@@ -350,27 +348,26 @@ public class AddCustomer extends CustomActivity {
         }
     }
 
-    private void updateCustomerView(mCustomer customer){
+    private void updateCustomerView(mCustomer customer) {
         mobile.setText(customer.getMobile());
         name.setText(customer.getName());
         gst.setText(customer.getGST_NO());
         try {
-            dob.setText(CustomDatePicker.formatDate(CustomDatePicker.getDate(customer.getDOB(),  CustomDatePicker.ShowFormatOld),CustomDatePicker.ShowFormat));
-            doa.setText(CustomDatePicker.formatDate(CustomDatePicker.getDate(customer.getDOA(),  CustomDatePicker.ShowFormatOld),CustomDatePicker.ShowFormat));
+            dob.setText(CustomDatePicker.formatDate(CustomDatePicker.getDate(customer.getDOB(), CustomDatePicker.ShowFormatOld), CustomDatePicker.ShowFormat));
+            doa.setText(CustomDatePicker.formatDate(CustomDatePicker.getDate(customer.getDOA(), CustomDatePicker.ShowFormatOld), CustomDatePicker.ShowFormat));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
 
-
     }
 
 
-   // @Override
+    // @Override
     public void onSendResponse(mCustomer customer) {
         Intent intent = new Intent();
-        intent.putExtra("customer",customer);
-        intent.putExtra("order",order);
+        intent.putExtra("customer", customer);
+        intent.putExtra("order", order);
         setResult(RESULT_OK, intent);
         finish();
     }

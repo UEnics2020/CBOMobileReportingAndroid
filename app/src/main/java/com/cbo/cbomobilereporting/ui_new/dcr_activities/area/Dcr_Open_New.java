@@ -128,6 +128,7 @@ public class Dcr_Open_New extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_hadder_2016);
         }
 
+
         context = this;
         locationDB = new LocationDB();
         dayPlan = new mDayPlan("Day Plan");
@@ -317,15 +318,23 @@ public class Dcr_Open_New extends AppCompatActivity {
 
         }
 
-        if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "IsBackDate", "0").equals("1")) {
+        if (MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("LATEREMARK_YN", "Y").equalsIgnoreCase("N")) {
             late_remark.setText("");
             late_remark.setVisibility(View.GONE);
             lay_late_remark.setVisibility(View.GONE);
         } else {
-            lay_late_remark.setVisibility(View.VISIBLE);
-            late_remark.setVisibility(View.VISIBLE);
-            late_remark.setText(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "BackDateReason", ""));
+            if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "IsBackDate", "0").equals("1")) {
+                late_remark.setText("");
+                late_remark.setVisibility(View.GONE);
+                lay_late_remark.setVisibility(View.GONE);
+            } else {
+                lay_late_remark.setVisibility(View.VISIBLE);
+                late_remark.setVisibility(View.VISIBLE);
+                late_remark.setText(customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "BackDateReason", ""));
+            }
+
         }
+
 
         setLocationToUI();
 
@@ -1659,5 +1668,6 @@ public class Dcr_Open_New extends AppCompatActivity {
         }
 
     }
+
 
 }

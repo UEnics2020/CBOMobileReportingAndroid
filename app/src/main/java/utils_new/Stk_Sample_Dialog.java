@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cbo.cbomobilereporting.MyCustumApplication;
 import com.cbo.cbomobilereporting.R;
 import com.cbo.cbomobilereporting.databaseHelper.CBO_DB_Helper;
 import com.uenics.javed.CBOLibrary.Response;
@@ -65,28 +66,28 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
     ArrayAdapter<GiftModel> adapter;
     List<GiftModel> main_item_list = new ArrayList<GiftModel>();
     List<GiftModel> display_item_list = new ArrayList<GiftModel>();
-    ArrayList<String> data1, data2, data3,data5,item_list;
-    StringBuilder sb2, sb3, sb4,sb5,item_list_string;
+    ArrayList<String> data1, data2, data3, data5, item_list;
+    StringBuilder sb2, sb3, sb4, sb5, item_list_string;
     double mainval = 0.0;
     EditText search;
-    String ID="0";
+    String ID = "0";
 
-    String sample_name="",sample_pob="",sample_sample="";
-    String sample_name_previous="",sample_pob_previous="",sample_sample_previous="";
+    String sample_name = "", sample_pob = "", sample_sample = "";
+    String sample_name_previous = "", sample_pob_previous = "", sample_sample_previous = "";
     ImageView speciality_filter;
 
     Dialog dialog;
     public ProgressDialog progress1;
-    private  static final int MESSAGE_INTERNET=1;
+    private static final int MESSAGE_INTERNET = 1;
     ArrayList<DropDownModel> Specialitis;
 
 
     public Stk_Sample_Dialog(@NonNull Context context, Handler hh, Bundle Msg, Integer response_code) {
 
         this.context = context;
-        h1=hh;
-        this.response_code=response_code;
-        this.Msg=Msg;
+        h1 = hh;
+        this.response_code = response_code;
+        this.Msg = Msg;
     }
 
 
@@ -105,14 +106,13 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
         window.setGravity(Gravity.CENTER);
 
 
+        TextView hader_text = (TextView) view.findViewById(R.id.hadder_text_1);
+        hader_text.setText(MyCustumApplication.getInstance().getDataFrom_FMCG_PREFRENCE("STOCKIST_TITLE", "Stockist") + " Sample");
 
-        TextView hader_text =(TextView) view.findViewById(R.id.hadder_text_1);
-        hader_text.setText("Stockist Sample");
 
+        customVariablesAndMethod = Custom_Variables_And_Method.getInstance();
 
-        customVariablesAndMethod=Custom_Variables_And_Method.getInstance();
-
-        search= (EditText) view.findViewById(R.id.search);
+        search = (EditText) view.findViewById(R.id.search);
         mylist = (ListView) view.findViewById(R.id.stk_sample_list);
         mylist.setItemsCanFocus(true);
         mylist.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
@@ -145,17 +145,16 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
 
         getModelLocal();
 
-        if (main_item_list.size()>0) {
-            adapter = new MyAdapter((AppCompatActivity) context, display_item_list,this);
+        if (main_item_list.size() > 0) {
+            adapter = new MyAdapter((AppCompatActivity) context, display_item_list, this);
 
 
+            String[] sample_name1 = sample_name.split(",");
+            String[] sample_qty1 = sample_sample.split(",");
+            String[] sample_pob1 = sample_pob.split(",");
 
-            String[] sample_name1= sample_name.split(",");
-            String[] sample_qty1= sample_sample.split(",");
-            String[] sample_pob1= sample_pob.split(",");
-
-            for (int i=0;i<sample_name1.length;i++){
-                for (int j=0;j<main_item_list.size();j++) {
+            for (int i = 0; i < sample_name1.length; i++) {
+                for (int j = 0; j < main_item_list.size(); j++) {
                     if (sample_name1[i].equals(main_item_list.get(j).getName())) {
                         main_item_list.get(j).setScore(sample_pob1[i]);
                         main_item_list.get(j).setSample(sample_qty1[i]);
@@ -166,20 +165,20 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
             }
 
 
-            String[] sample_name1_previous= sample_name_previous.split(",");
-            String[] sample_qty1_previous= sample_sample_previous.split(",");
+            String[] sample_name1_previous = sample_name_previous.split(",");
+            String[] sample_qty1_previous = sample_sample_previous.split(",");
 
-            for (int i=0;i<sample_name1_previous.length;i++){
-                for (int j=0;j<main_item_list.size();j++) {
+            for (int i = 0; i < sample_name1_previous.length; i++) {
+                for (int j = 0; j < main_item_list.size(); j++) {
                     if (sample_name1_previous[i].equals(main_item_list.get(j).getName())) {
-                        main_item_list.get(j).setBalance( main_item_list.get(j).getBalance() + Integer.parseInt(sample_qty1_previous[i]));
+                        main_item_list.get(j).setBalance(main_item_list.get(j).getBalance() + Integer.parseInt(sample_qty1_previous[i]));
                     }
                 }
             }
             mylist.setAdapter(adapter);
             onItemSelectedListChanged();
 
-        }else{
+        } else {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
             builder1.setTitle("CBO");
             builder1.setIcon(R.drawable.alert1);
@@ -202,7 +201,7 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
 
                             @Override
                             public void onError(String message, String description) {
-                                AppAlert.getInstance().getAlert(context,message,description);
+                                AppAlert.getInstance().getAlert(context, message, description);
                             }
                         });
                     }
@@ -213,7 +212,7 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
         }
 
 
-        if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"DR_DIVISION_FILTER_YN","N").equals("N")){
+        if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "DR_DIVISION_FILTER_YN", "N").equals("N")) {
 
             speciality_filter.setVisibility(View.GONE);
 
@@ -223,7 +222,7 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
             @Override
             public void onClick(View v) {
 
-                if (Specialitis == null){
+                if (Specialitis == null) {
                     Specialitis = cbohelp.get_Specialitis();
                 }
                 new Spinner_Dialog(context, Specialitis, new Spinner_Dialog.OnItemClickListener() {
@@ -248,23 +247,23 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
                     if (!search.getText().toString().equals("") && search.getText().length() <= display_item_list.get(l).getName().length()) {
                         if (display_item_list.get(l).getName().toLowerCase().contains(search.getText().toString().toLowerCase().trim())) {
                             //mylist.smoothScrollToPosition(l);
-                            mylist.smoothScrollToPositionFromTop(l,l,500);
+                            mylist.smoothScrollToPositionFromTop(l, l, 500);
                             for (int j = l; j < display_item_list.size(); j++) {
                                 if (search.getText().length() <= display_item_list.get(j).getName().length()) {
                                     if (display_item_list.get(j).getName().toLowerCase().contains(search.getText().toString().toLowerCase().trim())) {
                                         display_item_list.get(j).setHighlight(true);
-                                    }else{
+                                    } else {
                                         display_item_list.get(j).setHighlight(false);
                                     }
-                                }else{
+                                } else {
                                     display_item_list.get(j).setHighlight(false);
                                 }
                             }
                             break;
-                        }else{
+                        } else {
                             display_item_list.get(l).setHighlight(false);
                         }
-                    }else{
+                    } else {
                         display_item_list.get(l).setHighlight(false);
                     }
                 }
@@ -283,13 +282,13 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                String total_pob="";
-                boolean count=false,check;
+                String total_pob = "";
+                boolean count = false, check;
 
                 for (int i = 0; i < main_item_list.size(); i++) {
                     check = main_item_list.get(i).isSelected();
-                    if (check ) {
-                        count=true;
+                    if (check) {
+                        count = true;
                         break;
                     }
                 }
@@ -390,14 +389,14 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
                         customVariablesAndMethod.msgBox(context, "Wrong Input Please Try Again..");
                     }
                 }
-                if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context,"SAMPLE_POB_MANDATORY").equals("Y") && total_pob.equals("")) {
-                    customVariablesAndMethod.msgBox(context,"POB can't be blank");
+                if (customVariablesAndMethod.getDataFrom_FMCG_PREFRENCE(context, "SAMPLE_POB_MANDATORY").equals("Y") && total_pob.equals("")) {
+                    customVariablesAndMethod.msgBox(context, "POB can't be blank");
                     sb2 = new StringBuilder();
                     sb3 = new StringBuilder();
                     sb4 = new StringBuilder();
                     sb5 = new StringBuilder();
                     item_list_string = new StringBuilder();
-                }else {
+                } else {
 
                     Bundle i = new Bundle();
                     i.putString("val", sb3.toString());
@@ -411,7 +410,7 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
                     dialog.dismiss();
                 }
 
-                }
+            }
         });
 
         dialog.show();
@@ -421,12 +420,12 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
     private List<GiftModel> getModelLocal() {
         main_item_list.clear();
         display_item_list.clear();
-       // String ItemIdNotIn = "0";
-        Cursor c = cbohelp.getAllProducts(ID,"Stk");
+        // String ItemIdNotIn = "0";
+        Cursor c = cbohelp.getAllProducts(ID, "Stk");
         if (c.moveToFirst()) {
             do {
                 main_item_list.add(new GiftModel(c.getString(c.getColumnIndex("item_name")), c.getString(c.getColumnIndex("item_id")), c.getString(c.getColumnIndex("stk_rate")),
-                        c.getInt(c.getColumnIndex("STOCK_QTY")), c.getInt(c.getColumnIndex("BALANCE")),c.getInt(c.getColumnIndex("SPL_ID"))));
+                        c.getInt(c.getColumnIndex("STOCK_QTY")), c.getInt(c.getColumnIndex("BALANCE")), c.getInt(c.getColumnIndex("SPL_ID"))));
             } while (c.moveToNext());
         }
 
@@ -434,11 +433,11 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
         return main_item_list;
     }
 
-    private void filer_item_speciality(String SPL_ID){
+    private void filer_item_speciality(String SPL_ID) {
         display_item_list.clear();
-        if (SPL_ID.equalsIgnoreCase("0")){
+        if (SPL_ID.equalsIgnoreCase("0")) {
             display_item_list.addAll(main_item_list);
-        }else {
+        } else {
             for (GiftModel item : main_item_list) {
                 if (item.getSPL_ID() == Integer.parseInt(SPL_ID)) {
                     display_item_list.add(item);
@@ -446,14 +445,15 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
 
             }
         }
-        adapter = new MyAdapter((AppCompatActivity) context, display_item_list,this::onItemSelectedListChanged);
+        adapter = new MyAdapter((AppCompatActivity) context, display_item_list, this::onItemSelectedListChanged);
         mylist.setAdapter(adapter);
         onItemSelectedListChanged();
     }
+
     @Override
     public void onDownloadComplete() {
         getModelLocal();
-        adapter = new MyAdapter((AppCompatActivity) context, display_item_list,this::onItemSelectedListChanged);
+        adapter = new MyAdapter((AppCompatActivity) context, display_item_list, this::onItemSelectedListChanged);
         mylist.setAdapter(adapter);
         onItemSelectedListChanged();
     }
@@ -467,20 +467,20 @@ public class Stk_Sample_Dialog implements Up_Dwn_interface, Ipob {
     }
 
     @Override
-    public void onItemSelectedListChanged(){
-        Double total_pob=0D;
+    public void onItemSelectedListChanged() {
+        Double total_pob = 0D;
         int items = 0;
         for (int i = 0; i < display_item_list.size(); i++) {
 
             if (display_item_list.get(i).isSelected()) {
-                items ++;
-                total_pob += Double.parseDouble( display_item_list.get(i).getScore()) * Double.parseDouble( display_item_list.get(i).getRate());
+                items++;
+                total_pob += Double.parseDouble(display_item_list.get(i).getScore()) * Double.parseDouble(display_item_list.get(i).getRate());
 
             }
         }
-        if (total_pob>0){
-            itemincart.setText( "POB : " + AddToCartView.toCurrency(String.format("%.2f", (total_pob))) + " (" + items + " items )" );
-        }else{
+        if (total_pob > 0) {
+            itemincart.setText("POB : " + AddToCartView.toCurrency(String.format("%.2f", (total_pob))) + " (" + items + " items )");
+        } else {
             itemincart.setText(items + " item");
         }
     }

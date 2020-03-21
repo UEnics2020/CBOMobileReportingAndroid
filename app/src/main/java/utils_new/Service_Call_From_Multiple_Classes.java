@@ -1053,6 +1053,11 @@ public class Service_Call_From_Multiple_Classes {
                 editor.putString("GEO_FANCING_KM_FOR", c.getString("GEO_FANCING_KM_FOR"));
                 editor.putString("DCRSUMMARYONFINALSUBMIT", c.getString("DCRSUMMARYONFINALSUBMIT"));
                 editor.putString("GOOGLEMAPAPI_KEY", c.getString("GOOGLEMAPAPI_KEY"));
+                editor.putString("DAYPLAN_CLICK_MSG", c.getString("DAYPLAN_CLICK_MSG"));
+                editor.putString("LATEREMARK_YN", c.getString("LATEREMARK_YN"));
+                editor.putString("STOCKIST_TITLE", c.getString("STOCKIST_TITLE"));
+                editor.putString("STOCKIST_TITLE", c.getString("STOCKIST_TITLE"));
+                editor.putString("WORK_WITHYN", c.getString("WORK_WITHYN"));
 
                 editor.apply();
 

@@ -50,6 +50,7 @@ public class aBillCart extends RecyclerView.Adapter<aBillCart.ProductViewHolder>
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
         itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_bill_card, parent, false);
+//        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_bill_card_new, parent, false);
         return new ProductViewHolder(itemView);
 
        /* itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_bill_card, parent, false);

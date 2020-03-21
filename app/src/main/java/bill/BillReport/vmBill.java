@@ -35,10 +35,10 @@ import utils_new.AppAlert;
 import utils_new.CustomDatePicker;
 
 public class vmBill extends CBOViewModel<IBill> {
-   private  ArrayList<mBill> billArrayList= new ArrayList<>();
-   private Double billAmt=0.0;
+    private ArrayList<mBill> billArrayList = new ArrayList<>();
+    private Double billAmt = 0.0;
 
-   private mOutlet outlet;
+    private mOutlet outlet;
 
     @Override
     public void onUpdateView(AppCompatActivity context, IBill view) {
@@ -61,44 +61,41 @@ public class vmBill extends CBOViewModel<IBill> {
         this.outlet = outlet;
     }
 
-    public void getBills(Context context, mCompany company, Date FDate, Date  TDate){
+    public void getBills(Context context, mCompany company, Date FDate, Date TDate) {
 
-        HashMap<String,String> request=new HashMap<>();
+        HashMap<String, String> request = new HashMap<>();
         request.put("sCompanyFolder", MyCustumApplication.getInstance().getUser().getCompanyCode());
         request.put("iPA_ID", MyCustumApplication.getInstance().getUser().getID());
-        request.put("iCOMPANY_ID",company.getId());
-        request.put("FDATE",CustomDatePicker.formatDate(FDate,CustomDatePicker.CommitFormat));
-        request.put("TDATE",CustomDatePicker.formatDate(TDate,CustomDatePicker.CommitFormat) );
+        request.put("iCOMPANY_ID", company.getId());
+        request.put("FDATE", CustomDatePicker.formatDate(FDate, CustomDatePicker.CommitFormat));
+        request.put("TDATE", CustomDatePicker.formatDate(TDate, CustomDatePicker.CommitFormat));
 
-        getBills(context,request);
-
+        getBills(context, request);
 
 
     }
 
-    public void getBills(Context context, mOutlet outlet){
+    public void getBills(Context context, mOutlet outlet) {
 
-        HashMap<String,String> request=new HashMap<>();
+        HashMap<String, String> request = new HashMap<>();
         request.put("sCompanyFolder", MyCustumApplication.getInstance().getUser().getCompanyCode());
         request.put("iPA_ID", MyCustumApplication.getInstance().getUser().getID());
-        request.put("iCOMPANY_ID",outlet.getCOMPANY_ID());
-        request.put("FDATE",outlet.getFDATE());
-        request.put("TDATE",outlet.getTDATE() );
+        request.put("iCOMPANY_ID", outlet.getCOMPANY_ID());
+        request.put("FDATE", outlet.getFDATE());
+        request.put("TDATE", outlet.getTDATE());
 
-        getBills(context,request);
-
+        getBills(context, request);
 
 
     }
 
-    public void getBills(Context context, HashMap<String,String> request){
+    public void getBills(Context context, HashMap<String, String> request) {
 
 
-
-        ArrayList<Integer> tables=new ArrayList<>();
+        ArrayList<Integer> tables = new ArrayList<>();
         tables.add(0);
 
-        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_GRID_MOBILE",request)
+        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_GRID_MOBILE", request)
                 .setTables(tables)
 //                    .setShowProgess(items.size() == 0 )
                 .setResponse(new CBOServices.APIResponse() {
@@ -118,12 +115,11 @@ public class vmBill extends CBOViewModel<IBill> {
 
                     @Override
                     public void onError(String s, String s1) {
-                        AppAlert.getInstance().getAlert(context,s,s1);
+                        AppAlert.getInstance().getAlert(context, s, s1);
                     }
                 }));
 
     }
-
 
 
     private void parser2(Bundle result) throws Exception {
@@ -132,14 +128,15 @@ public class vmBill extends CBOViewModel<IBill> {
             JSONArray row = new JSONArray(table0);
             billAmt = 0.0;
             billArrayList.clear();
+            MyCustumApplication.getInstance().setDataInTo_FMCG_PREFRENCE("IS_CHECH_COUNT", "" + row.length());
             for (int i = 0; i < row.length(); i++) {
                 JSONObject c = row.getJSONObject(i);
-                mBill bill=new mBill();
+                mBill bill = new mBill();
                 bill.setCOMPANY_NAME(c.getString("COMPANY_NAME"));
                 bill.setPOSTING_ID(c.getString("POSTING_ID"));
                 bill.setBILL_PRINT(c.getString("BILL_PRINT"));
                 bill.setNET_AMT(c.getDouble("NET_AMT"));
-                bill.setDOC_DATE(CustomDatePicker.getDate( c.getString("DOC_DATE"),CustomDatePicker.ShowFormatOld));
+                bill.setDOC_DATE(CustomDatePicker.getDate(c.getString("DOC_DATE"), CustomDatePicker.ShowFormatOld));
                 bill.setPartyId(c.getString("COMPANY_ID"));
                 bill.setPayMode(c.getString("PAYMENT_MODE"));
                 bill.setParty_mobile(c.getString("MOBILE_NO"));
@@ -154,7 +151,7 @@ public class vmBill extends CBOViewModel<IBill> {
 
                 bill.setGST_NO(c.getString("GST_NO"));
 
-                bill.setEdit(c.getInt("EDITYN")== 1);
+                bill.setEdit(c.getInt("EDITYN") == 1);
                 bill.setDelete(c.getInt("DELETEYN") == 1);
 
 
@@ -171,16 +168,16 @@ public class vmBill extends CBOViewModel<IBill> {
     }
 
 
-    public void deleteBill(Context context, mBill bill){
-        HashMap<String,String> request=new HashMap<>();
+    public void deleteBill(Context context, mBill bill) {
+        HashMap<String, String> request = new HashMap<>();
         request.put("sCompanyFolder", MyCustumApplication.getInstance().getUser().getCompanyCode());
         request.put("iPA_ID", MyCustumApplication.getInstance().getUser().getID());
-        request.put("iPOSTING_ID",bill.getPOSTING_ID());
+        request.put("iPOSTING_ID", bill.getPOSTING_ID());
 
-        ArrayList<Integer> tables=new ArrayList<>();
+        ArrayList<Integer> tables = new ArrayList<>();
         tables.add(0);
 
-        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_DELETE_MOBILE",request)
+        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_DELETE_MOBILE", request)
                 .setTables(tables)
                 .setResponse(new CBOServices.APIResponse() {
                     @Override
@@ -194,22 +191,21 @@ public class vmBill extends CBOViewModel<IBill> {
                     public void onResponse(Bundle bundle) throws Exception {
 
 
-
                     }
 
                     @Override
                     public void onError(String s, String s1) {
-                        AppAlert.getInstance().getAlert(context,s,s1);
+                        AppAlert.getInstance().getAlert(context, s, s1);
                     }
                 }));
 
     }
 
 
-    public void getBillDet(Context context, mBill bill,String status){
+    public void getBillDet(Context context, mBill bill, String status) {
 
         mBillOrder order = new mBillOrder()
-                .setDocDate(CustomDatePicker.formatDate( bill.getDOC_DATE(),CustomDatePicker.ShowFormatOld))
+                .setDocDate(CustomDatePicker.formatDate(bill.getDOC_DATE(), CustomDatePicker.ShowFormatOld))
                 .setPartyId(bill.getPartyId())
                 .setPartyName(bill.getCOMPANY_NAME())
                 .setPayMode(bill.getPayMode())
@@ -227,21 +223,21 @@ public class vmBill extends CBOViewModel<IBill> {
                 .setGST_NO(bill.getGST_NO());
 
 
-        HashMap<String,String> request=new HashMap<>();
+        HashMap<String, String> request = new HashMap<>();
         request.put("sCompanyFolder", MyCustumApplication.getInstance().getUser().getCompanyCode());
         request.put("iPA_ID", MyCustumApplication.getInstance().getUser().getID());
-        request.put("iPOSTING_ID",bill.getPOSTING_ID());
+        request.put("iPOSTING_ID", bill.getPOSTING_ID());
 
-        ArrayList<Integer> tables=new ArrayList<>();
+        ArrayList<Integer> tables = new ArrayList<>();
         tables.add(0);
 
-        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_POPULATE_MOBILE",request)
+        new MyOrderAPIService(context).execute(new ResponseBuilder("BILL_POPULATE_MOBILE", request)
                 .setTables(tables)
                 .setResponse(new CBOServices.APIResponse() {
                     @Override
                     public void onComplete(Bundle bundle) throws Exception {
                         if (view != null) {
-                            view.showBillDetail(order,company);
+                            view.showBillDetail(order, company);
                         }
                     }
 
@@ -293,12 +289,11 @@ public class vmBill extends CBOViewModel<IBill> {
 
                     @Override
                     public void onError(String s, String s1) {
-                        AppAlert.getInstance().getAlert(context,s,s1);
+                        AppAlert.getInstance().getAlert(context, s, s1);
                     }
                 }));
 
     }
-
 
 
 }

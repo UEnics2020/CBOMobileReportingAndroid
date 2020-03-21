@@ -857,11 +857,18 @@ public class CBO_DB_Helper extends SQLiteOpenHelper {
         //return sd.query("phdcrdr", null, null, null, null, null, null);
         String extraQry = "";
         if (!RXGENYN.equalsIgnoreCase("0")) {
-            extraQry = "and phdoctor.RXGENYN ='" + "1" + "'";
+            extraQry = " and phdoctor.RXGENYN ='" + "1" + "'";
         }
         return sd.rawQuery("select * from tempdr " +
                 "left join phdoctor on phdoctor.dr_id = tempdr.dr_id " +
                 "where (call_type = '0' or call_type='2' or call_type='3') " + extraQry, null);
+//        return sd.rawQuery("select * from tempdr " +
+//                "inner join phdoctor on phdoctor.dr_id = tempdr.dr_id " +
+//                "where (call_type = '0' or call_type='2' or call_type='3') " + extraQry, null);
+//        return sd.rawQuery("select * from tempdr ", null);
+//        return sd.rawQuery("select * from phdoctor ", null);
+
+
     }
 
 
